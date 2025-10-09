@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home - Vitalence</title>
+    <link rel="stylesheet" href="styles/style.css">
+</head>
+<body>
+    <header>
+        <h1 id="welcomeMessage">¡Bienvenido!</h1>
+        <button id="logoutBtn">Cerrar sesión</button>
+    </header>
+
+    <main>
+        <p></p>
+        <!-- Contenido -->
+    </main>
+
+    <script>
+        // Mostrar el nombre del usuario
+        window.addEventListener("DOMContentLoaded", () => {
+            const nombreUsuario = localStorage.getItem("usuarioNombre");
+            const welcomeMessage = document.getElementById("welcomeMessage");
+
+            if (nombreUsuario) {
+                welcomeMessage.textContent = `¡Bienvenido, ${nombreUsuario}!`;
+            }
+        });
+
+        // Cerrar sesión
+        const logoutBtn = document.getElementById("logoutBtn");
+        logoutBtn.addEventListener("click", () => {
+            localStorage.removeItem("usuarioNombre");
+            window.location.href = "index.html";
+        });
+    </script>
+</body>
+</html>
