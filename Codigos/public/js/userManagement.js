@@ -2,13 +2,6 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebas
 import { getFirestore, collection, getDocs, doc, updateDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
 
 const firebaseConfig = {
-    apiKey: "AIzaSyDi_TsjlOdJzzqvtA192jrWI58QZJqRblI",
-    authDomain: "vitalencedb.firebaseapp.com",
-    projectId: "vitalencedb",
-    storageBucket: "vitalencedb.firebasestorage.app",
-    messagingSenderId: "493881358893",
-    appId: "1:493881358893:web:5991e1b7e4a18a6ed496a4",
-    measurementId: "G-RH3E5CMLBC"
 };
 
 const app = initializeApp(firebaseConfig);
