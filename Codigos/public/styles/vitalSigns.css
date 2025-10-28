@@ -1,0 +1,191 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
+
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.topbar{
+    position: fixed;
+    background: #fff;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.08);
+    width: 100%;
+    height: 60px;
+    padding: 0 20px;
+    display: grid;
+    grid-template-columns: 2fr 10fr 0.4fr 1fr;
+    align-items: center;
+    z-index: 1;
+}
+
+.logo img {
+    height: 50px;
+    width: auto;
+    display: block;
+}
+
+.search{
+    position: relative;
+    width: 60%;
+    justify-self: center;
+}
+
+.search input{
+    width: 100%;
+    height: 40px;
+    padding: 0 40px;
+    font-size: 16px;
+    outline: none;
+    border: none;
+    border-radius: 10px;
+    background: #f5f5f5;
+}
+
+.search i{
+    position: absolute;
+    right: 15px;
+    top: 15px;
+    cursor: pointer;
+}
+
+.user{
+    position: relative;
+    width: 50px;
+    height: 50px;
+}
+
+.user img{
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+}
+
+/*Sidebar*/
+
+.sidebar {
+    position: fixed;
+    top: 60px;
+    width: 260px;
+    height: calc(100% - 60px);
+    background: #FA4149;
+    overflow-x: hidden;
+}
+
+.sidebar ul {
+    margin-top: 20px;
+    padding: 0;
+}
+
+.sidebar ul li {
+    list-style: none;
+    width: 100%;
+}
+
+.sidebar ul li a {
+    display: flex;
+    align-items: center;
+    padding: 15px 20px;
+    color: #fff;
+    text-decoration: none;
+    transition: 0.3s ease;
+    font-weight: 500;
+}
+
+.sidebar ul li a i {
+    min-width: 40px;
+    text-align: center;
+    font-size: 20px;
+}
+
+/* Hover effect */
+.sidebar ul li:hover {
+    background-color: #ffffff;
+}
+
+.sidebar ul li:hover a {
+    color: #FA4149;
+}
+
+/* Active item */
+.sidebar ul li.active {
+    background-color: #ffffff;
+}
+
+.sidebar ul li.active a {
+    color: #2f855a;
+    font-weight: 600;
+}
+
+
+/* Contenedor principal para el contenido */
+.content {
+  margin-left: 260px; /* mismo ancho que la sidebar */
+  padding: 20px 30px;
+}
+
+/* Título principal */
+.content h1 {
+  font-size: 28px;
+  color: #2f855a;
+  margin-top: 80px; /* para no quedar oculto debajo de la topbar */
+  margin-bottom: 20px;
+}
+
+/* Secciones de datos */
+#datos-paciente,
+#signos-actuales,
+#rangos-normales,
+#alertas {
+  background: #fff;
+  border-radius: 10px;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Textos dentro de las secciones */
+#datos-paciente p,
+#signos-actuales p,
+#rangos-normales p {
+  font-weight: 500;
+  font-size: 16px;
+  margin-bottom: 12px;
+  color: #333;
+}
+
+/* Etiquetas en negrita */
+#datos-paciente strong,
+#signos-actuales strong,
+#rangos-normales strong {
+  color: #FA4149; /* rojo del sidebar */
+}
+
+/* Títulos de sección */
+#signos-actuales h2,
+#rangos-normales h2,
+#alertas h2 {
+  font-weight: 700;
+  font-size: 22px;
+  margin-bottom: 15px;
+  color: #2f855a;
+  border-bottom: 2px solid #FA4149;
+  padding-bottom: 8px;
+}
+
+/* Lista de alertas */
+#alertas ul {
+  list-style-type: disc;
+  padding-left: 20px;
+  color: #d9534f; /* rojo alerta */
+  font-weight: 600;
+  font-size: 16px;
+}
+
+#alertas ul li {
+  margin-bottom: 8px;
+}

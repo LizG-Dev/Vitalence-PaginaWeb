@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Mi Encuesta - Vitalence</title>
+    <link rel="stylesheet" href="styles/mySurvey.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" />
+    <link rel="manifest" href="manifest.json">
+</head>
+<body>
+
+    <div class="container">
+        <div class="topbar">
+            <div class="logo">
+                <img src="img/logo.jpeg" alt="Vitalence Logo">
+            </div>
+            <div class="search">
+                <input type="text" id="search" placeholder="Buscar">
+                <label for="search"><i class="fa-solid fa-magnifying-glass"></i></label>
+            </div>
+            <i class="fa-solid fa-bell"></i>
+            <div class="user">
+                <img src="img/user.jpg" alt="">
+            </div>
+        </div>
+
+        <!-- nav -->
+        <div class="sidebar">
+            <ul>
+                <li><a href="dashboard.html"><i class="fas fa-home"></i><div>Inicio</div></a></li>
+                <li><a href="mySurvey.html"><i class="fas fa-file-lines"></i><div>Mi Encuesta</div></a></li>
+                <li><a href="vitalSigns.html"><i class="fas fa-heartbeat"></i><div>Signos Vitales</div></a></li>
+                <li><a href="#" id="logout-btn"><i class="fas fa-right-from-bracket"></i><div>Cerrar sesión</div></a></li>
+            </ul>
+        </div>
+
+    <div class="my-survey">
+        <h2>Mi Encuesta</h2>
+        <form id="surveyForm">
+            <label for="firstName">Nombre de usuario:</label>
+            <input type="text" id="firstName" name="firstName" required />
+
+            <label for="age">Edad:</label>
+            <input type="number" id="age" name="age" min="0" required />
+
+            <label for="gender">Genero:</label>
+            <select id="gender" name="gender" required>
+                <option value="">Seleccionar</option>
+                <option value="Male">Hombre</option>
+                <option value="Female">Mujer</option>
+                <option value="Other">Otro</option>
+            </select>
+
+            <label for="weight">Peso (kg):</label>
+            <input type="number" id="weight" name="weight" step="0.1" min="0" required />
+
+            <label for="height">Altura (cm):</label>
+            <input type="number" id="height" name="height" step="0.1" min="0" required />
+
+            <label for="diagnosis">Diagnostico:</label>
+            <textarea id="diagnosis" name="diagnosis" rows="3"></textarea>
+
+            <button type="submit">Save</button>
+        </form>
+
+        <div id="message"></div>
+    </div>
+
+    <script src="js/mySurvey.js"></script>
+    <script src="js/main.js"></script>
+    <script src="serviceWorker.js"></script>
+</body>
+</html>

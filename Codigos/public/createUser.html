@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+   <link rel="stylesheet" href="styles/createUser.css" />
+   <link rel="manifest" href="manifest.json">
+    <title>Panel de Administración - Vitalence</title>
+</head> 
+
+<body>
+
+    <div class="container">
+        <!-- Barra lateral -->
+        <div class="navigation">
+            <ul>
+                <li>
+                    <a href="#" class="nav-logo">
+                        <img src="img/logoremov.png" alt="Logo" class="logo-image" />
+                        <h2 class="logo-text">Vitalence</h2>
+                    </a>
+                </li>
+                <li><a href="admin.html"><span class="icon"><i class="fa-solid fa-house"></i></span><span class="title">Panel principal</span></a></li>
+                <li><a href="userManagement.html"><span class="icon"><i class="fa-solid fa-users-gear"></i></span><span class="title">Gestión de usuarios</span></a></li>
+                <li><a href="createUser.html"><span class="icon"><i class="fa-solid fa-user-plus"></i></span><span class="title">Crear usuario</span></a></li>
+                <li id="logout-btn"><a href="#"><span class="icon"><i class="fa-solid fa-right-from-bracket"></i></span><span class="title">Cerrar sesión</span></a></li>           
+            </ul>
+        </div>
+
+        <!-- Contenido principal -->
+        <div class="main">
+            <div class="topbar">
+                <div class="toggle"><i class="fa-solid fa-bars"></i></div>
+                <div class="search">
+                    <label>
+                        <input type="text" placeholder="Buscar usuario o registro">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                    </label>
+                </div>
+                <div class="user"><img src="img/user.jpg" alt="Admin"></div>
+            </div>
+<h2>Crear nuevo usuario</h2>
+<form id="createUserForm">
+    <label for="nombre">Nombre:</label>
+    <input type="text" id="nombre" required>
+
+    <label for="email">Email:</label>
+    <input type="email" id="email" required>
+
+    <label for="password">Contraseña:</label>
+    <input type="password" id="password" required>
+
+    <label for="rol">Rol:</label>
+    <select id="rol">
+        <option value="usuario">Usuario</option>
+        <option value="admin">Admin</option>
+    </select>
+
+    <button type="submit">Crear Usuario</button>
+</form>
+
+<div id="statusMessage"></div>
+
+<!-- Script JS -->
+<script src="js/createUser.js"></script>
+<script src="js/main.js"></script>
+<script src="serviceWorker.js"></script>
+</body>
+</html>

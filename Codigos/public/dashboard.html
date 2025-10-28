@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Dashboard - Vitalence</title>
+    <link rel="stylesheet" href="/styles/dashboard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" />
+    <link rel="manifest" href="/manifest.json">
+</head>
+
+<body>
+    <div class="container">
+        <div class="topbar">
+            <div class="logo">
+                <img src="img/logo.jpeg" alt="Vitalence Logo">
+            </div>
+            <div class="search">
+                <input type="text" id="search" placeholder="Buscar">
+                <label for="search"><i class="fa-solid fa-magnifying-glass"></i></label>
+            </div>
+            <i class="fa-solid fa-bell"></i>
+            <div class="user">
+                <img src="/img/user.jpg" alt="">
+            </div>
+        </div>
+
+        <!-- nav -->
+        <div class="sidebar">
+            <ul>
+                <li><a href="/dashboard.html"><i class="fas fa-home"></i><div>Inicio</div></a></li>
+                <li><a href="/mySurvey.html"><i class="fas fa-file-lines"></i><div>Mi Encuesta</div></a></li>
+                <li><a href="/vitalSigns.html"><i class="fas fa-heartbeat"></i><div>Signos Vitales</div></a></li>
+                <li><a href="#" id="logout-btn"><i class="fas fa-right-from-bracket"></i><div>Cerrar sesión</div></a></li>
+            </ul>
+        </div>
+
+        <div class="main">
+            <h2 id="welcomeUser">¡Bienvenido!</h2>
+
+            <!-- Tarjetas -->
+            <div class="cardBox">
+                <div class="card">
+                    <div>
+                        <div class="cardName">Nombre</div>
+                        <div class="numbers" id="nombrePaciente">Cargando...</div>
+                    </div>
+                    <div class="iconBx"><i class="fa-solid fa-id-card"></i></div>
+                </div>
+
+                <div class="card">
+                    <div>
+                        <div class="cardName">Edad</div>
+                        <div class="numbers" id="edad">Cargando...</div>
+                    </div>
+                    <div class="iconBx"><i class="fa-solid fa-cake-candles"></i></div>
+                </div>
+
+                <div class="card">
+                    <div>
+                        <div class="cardName">Sexo</div>
+                        <div class="numbers" id="sexo">Cargando...</div>
+                    </div>
+                    <div class="iconBx"><i class="fa-solid fa-venus-mars"></i></div>
+                </div>
+
+                <div class="card">
+                    <div>
+                        <div class="cardName">Peso</div>
+                        <div class="numbers" id="peso">Cargando...</div>
+                    </div>
+                    <div class="iconBx"><i class="fa-solid fa-weight-scale"></i></div>
+                </div>
+
+                <div class="card">
+                    <div>
+                        <div class="cardName">Estatura</div>
+                        <div class="numbers" id="estatura">Cargando...</div>
+                    </div>
+                    <div class="iconBx"><i class="fa-solid fa-ruler-vertical"></i></div>
+                </div>
+
+                <div class="card">
+                    <div>
+                        <div class="cardName">Diagnóstico</div>
+                        <div class="numbers" id="enfermedades">Cargando...</div>
+                    </div>
+                    <div class="iconBx"><i class="fa-solid fa-notes-medical"></i></div>
+                </div>
+            </div>
+
+            <!-- Gráficos -->
+            <div class="charts">
+                <div class="chart">
+                    <h3>Peso a lo largo del tiempo</h3>
+                    <canvas id="pesoChart"></canvas>
+                </div>
+                <div class="chart">
+                    <h3>Presión arterial</h3>
+                    <canvas id="presionChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script type="module" src="js/dashboard.js"></script>
+    <script src="js/main.js"></script>
+    <script src="serviceWorker.js"></script>
+
+</body>
+</html>
