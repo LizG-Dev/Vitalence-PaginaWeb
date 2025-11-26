@@ -1,0 +1,394 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
+
+*{ 
+    padding: 0;
+    margin: 0; 
+    box-sizing: border-box; 
+    font-family: 'Montserrat', sans-serif; 
+}
+
+.topbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 70px;
+    background: #ffffff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 40px;
+    z-index: 10;
+    border-bottom: 3px solid #FA4149;
+}
+
+/* --- Logo --- */
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.logo img {
+    height: 45px;
+    width: auto;
+    display: block;
+}
+
+.logo h1 {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #2a2185;
+}
+
+/* --- Texto de bienvenida --- */
+#welcomeUser {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: #2a2185;
+    letter-spacing: 0.5px;
+    text-align: center;
+    position: relative;
+}
+
+#welcomeUser::after {
+    content: '';
+    display: block;
+    width: 60px;
+    height: 3px;
+    background: #FA4149;
+    margin: 6px auto 0;
+    border-radius: 2px;
+}
+
+/* --- Imagen de usuario --- */
+.user {
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 2px solid #FA4149;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.user:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+
+.user img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/*Sidebar*/
+
+.sidebar {
+    position: fixed;
+    top: 60px;
+    width: 260px;
+    height: calc(100% - 60px);
+    background: #FA4149;
+    overflow-x: hidden;
+}
+
+.sidebar ul {
+    margin-top: 20px;
+    padding: 0;
+}
+
+.sidebar ul li {
+    list-style: none;
+    width: 100%;
+}
+
+.sidebar ul li a {
+    display: flex;
+    align-items: center;
+    padding: 15px 20px;
+    color: #fff;
+    text-decoration: none;
+    transition: 0.3s ease;
+    font-weight: 500;
+}
+
+.sidebar ul li a i {
+    min-width: 40px;
+    text-align: center;
+    font-size: 20px;
+}
+
+/* Hover effect */
+.sidebar ul li:hover {
+    background-color: #ffffff;
+}
+
+.sidebar ul li:hover a {
+    color: #FA4149;
+}
+
+/* Active item */
+.sidebar ul li.active {
+    background-color: #ffffff;
+}
+
+.sidebar ul li.active a {
+    color: #2f855a;
+    font-weight: 600;
+}
+
+body {
+    background: #f7f8fa;
+    zoom: 0.95;
+}
+
+/* ===== CONTENEDOR PRINCIPAL ===== */
+main.content {
+  margin-left: 260px;
+  padding: 30px 40px;
+  min-height: 100vh;
+  background: #f7f8fa;
+  display: flex;
+  flex-direction: column;
+  gap: 25px !important;
+  animation: fadeIn 0.6s ease-in-out;
+}
+
+/* Animación de entrada general */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+main.content h1::after {
+  content: "";
+  display: block;
+  width: 80px;
+  height: 3px;
+  background: #FA4149;
+  margin-top: 6px;
+  border-radius: 2px;
+  transition: width 0.4s ease;
+}
+
+main.content h1:hover::after {
+  width: 120px;
+}
+
+
+/* === TARJETAS DE SECCIÓN === */
+main.content section {
+  background: #fff;
+  border-radius: 15px;
+  margin-top: 35px;
+  padding: 25px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+main.content section:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
+}
+
+/* Borde lateral decorativo */
+main.content section::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 5px;
+  background: linear-gradient(180deg, #FA4149, #ff6b81);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+main.content section:hover::before {
+  opacity: 1;
+}
+
+/* === TEXTOS Y PÁRRAFOS === */
+main.content section p {
+  font-weight: 500;
+  font-size: 16px;
+  margin-bottom: 10px;
+  color: #333;
+  line-height: 1.5;
+}
+
+main.content section strong {
+  color: #FA4149;
+}
+
+/* === TÍTULOS DE SECCIÓN === */
+main.content section h2 {
+  font-weight: 700;
+  font-size: 22px;
+  margin-bottom: 15px;
+  color: #2f855a;
+  border-bottom: 2px solid #FA4149;
+  padding-bottom: 8px;
+  letter-spacing: 0.3px;
+}
+
+#datos-paciente {
+    margin-top: 60px !important;
+}
+
+/* === LISTA DE ALERTAS === */
+#alertas ul {
+  list-style: none;
+  padding-left: 0;
+  font-weight: 500;
+  font-size: 16px;
+  color: #d9534f;
+}
+
+#alertas ul li {
+  margin-bottom: 10px;
+  position: relative;
+  padding-left: 28px;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.15);
+    opacity: 0.7;
+  }
+}
+
+/*responsive*/
+
+@media(max-width: 1115px){
+    .sidebar{
+        width: 60px;
+    }
+    .main{
+        left: 60px;
+        width: calc(100% - 60px);
+    }
+}
+
+@media(max-width: 500px) {
+    .topbar{
+        grid-template-columns: 1fr 5fr 0.4fr 1fr;
+    }
+
+    .cards{
+        grid-template-columns: 1fr;
+    }
+
+    .logo img{
+        height: 50px;
+    }
+
+    .search{
+        width: 80%;
+    }
+
+    .search input{
+        padding: 0 20px;
+    }
+
+    .fa-bell{
+        margin-right: 5px;
+    }
+
+    .user{
+        width: 40px;
+        height: 40px;
+    }
+}
+
+@media (max-width: 1115px) {
+    main.content {
+        margin-left: 60px !important;     /* coincide con el sidebar reducido */
+        width: calc(100% - 60px) !important;
+    }
+}
+
+@media (max-width: 900px) {
+
+    main.content {
+        margin-left: 60px; /* coincide con tu responsive del sidebar */
+        padding: 20px;
+    }
+
+    main.content h1 {
+        font-size: 26px;
+        margin-top: 60px;
+        text-align: center;
+    }
+
+    main.content section {
+        padding: 20px;
+    }
+}
+
+@media (max-width: 700px) {
+
+    main.content {
+        gap: 20px;
+    }
+
+    main.content section {
+        width: 100%;
+        margin: 0 auto;
+        padding: 18px;
+    }
+
+    main.content section h2 {
+        text-align: center;
+        font-size: 20px;
+    }
+
+    main.content section p {
+        font-size: 15px;
+        text-align: center;
+    }
+}
+
+@media (max-width: 480px) {
+
+    main.content {
+        padding: 15px;
+        gap: 20px !important;
+    }
+
+    main.content section {
+        padding: 18px;
+        margin-top: 25px;
+        border-radius: 12px;
+    }
+
+    main.content section h2 {
+        font-size: 18px;
+        padding-bottom: 5px;
+    }
+
+    main.content section p {
+        font-size: 14px;
+        margin-bottom: 8px;
+    }
+
+    #datos-paciente {
+        margin-top: 80px !important;
+    }
+}

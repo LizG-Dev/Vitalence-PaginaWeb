@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Home - Vitalence</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+  <link rel="stylesheet" href="styles/home.css" />
+  <link rel="manifest" href="manifest.json">
+
+
+  <style>
+    html {
+      scroll-behavior: smooth;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <nav class="navbar section-content">
+    <a href="#" class="nav-logo">
+       <img src="img/logoremov.png" alt="Logo" class="logo-image" />
+       <h2 class="logo-text">Vitalence</h2>
+    </a>
+
+      <ul class="nav-menu">
+        <li class="nav-item">
+          <a href="#" class="nav-link"> Home </a>
+        </li>
+        <li class="nav-item">
+          <a href="#about-section" class="nav-link"> Sobre Nosotros </a>
+        </li>
+        <li class="nav-item">
+          <a href="#testimonials-section" class="nav-link"> Testimonios </a>
+        </li>
+        <li class="nav-item">
+          <a href="#gallery-section" class="nav-link"> Galeria </a>
+        </li>
+        <li class="nav-item">
+          <a href="#contact-section" class="nav-link"> Contacto </a>
+        </li>
+      </ul>
+      <button id="menu-open-button" class="fas fa-bars"></button>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero-section">
+      <div class="section-content">
+        <div class="hero-details">
+          <h2 class="title">Vitalence</h2>
+          <h3 class="subtitle">Monitoreo inteligente de signos vitales</h3>
+          <p class="description">¡Bienvenido a <strong>Vitalence</strong>! Nuestra plataforma está diseñada para facilitar el seguimiento
+        de la salud en tiempo real, permitiendo registrar, visualizar y analizar los signos vitales de cada paciente
+        de manera segura y eficiente.  
+        <br><br>
+        </p>
+
+          <div class="buttons">
+            <a href="index.html" class="button registro-sesion">Registrate o Inicia Sesion</a>
+            <a href="#contact-section" class="button contact-us">Contacto</a>
+          </div>
+        </div>
+        <div class="hero-image-wrapper">
+          <img src="img/home1.png" alt="Hero" class="hero-image" />
+        </div>
+      </div>
+    </section>
+
+    <!-- sobre nosotros -->
+    <section class="about-section" id="about-section">
+      <div class="section-content">
+        <div class="about-image-wrapper">
+          <img src="img/about.jpg" alt="About" class="about-image" />
+        </div>
+        <div class="about-details">
+          <h2 class="section-title">Sobre Nosotros</h2>
+          <p class="text">
+      Somos un equipo comprometido con el desarrollo de soluciones digitales que faciliten el monitoreo y la gestión
+      de los signos vitales de manera accesible, rápida y segura.
+
+      Nuestra plataforma permite a los usuarios registrar su información médica personal, visualizar sus indicadores
+      de salud a través de gráficas interactivas y compartir datos relevantes con profesionales médicos para un
+      seguimiento más eficiente.
+
+      <strong>Nuestra misión</strong> es mejorar la calidad de vida de las personas mediante la innovación tecnológica
+      en el ámbito de la salud, brindando herramientas confiables para la prevención, el diagnóstico temprano y
+      la atención personalizada.
+
+      <strong>Vitalence</strong> no solo es una aplicación, sino un paso hacia un futuro donde la salud y la tecnología
+      trabajan juntas por el bienestar de todos.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- testimonios -->
+    <section class="testimonials-section" id="testimonials-section">
+      <h2 class="section-title">Testimonios</h2>
+      <div class="slider-container">
+        <button class="prev">&#10094;</button>
+        <div class="slider-wrapper">
+          <ul class="testimonials-list">
+            <li class="testimonial">
+              <img src="img/t1.jpg" alt="User" class="user-image" />
+              <h3 class="name">Sara Rodriguez</h3>
+              <i class="feedback">"Desde que uso Vitalence, me siento mucho más tranquila. 
+                Antes tenía que ir al hospital cada semana para revisar mi presión y ritmo cardíaco. Ahora, con el dispositivo, 
+                mi médico puede ver mis resultados desde su computadora, y solo voy cuando realmente es necesario. Es fácil de usar, 
+                incluso para alguien de mi edad"</i>
+            </li>
+            <li class="testimonial">
+              <img src="img/t2.png" alt="User" class="user-image" />
+              <h3 class="name">Jose Torres</h3>
+              <i class="feedback">"Trabajo muchas horas y me preocupaba no tener tiempo para cuidar mi salud.
+                 Vitalence me ha ayudado a mantener un registro diario de mis signos vitales. Recibo alertas cuando algo no está bien,
+                  y eso me ha permitido detectar a tiempo cambios en mi presión arterial. Es una herramienta muy útil."</i>
+            </li>
+            <li class="testimonial">
+              <img src="img/t3.png" alt="User" class="user-image" />
+              <h3 class="name">Ana Lopez</h3>
+              <i class="feedback">"Tengo diabetes y problemas del corazón, así que mi familia siempre estaba preocupada. 
+                Desde que comencé a usar Vitalence, mis hijos pueden ver mis registros desde sus teléfonos. Si mi pulso 
+                está fuera de lo normal, el sistema avisa de inmediato. Me siento cuidada, aunque viva sola."</i>
+            </li>
+            <li class="testimonial">
+              <img src="img/t4.png" alt="User" class="user-image" />
+              <h3 class="name">Juan Ortiz</h3>
+              <i class="feedback">"Soy joven, pero tengo una condición respiratoria que requiere control constante. 
+                Vitalence me ha ayudado a registrar mi oxigenación y frecuencia cardíaca todos los días. Mi médico 
+                revisa los datos y ajusta mi tratamiento sin que yo tenga que ir siempre al consultorio. 
+                Es tecnología que realmente cambia vidas."</i>
+            </li>
+            <li class="testimonial">
+              <img src="img/t5.png" alt="User" class="user-image" />
+              <h3 class="name">Maria Sanchez</h3>
+              <i class="feedback">"Lo que más me gusta de Vitalence es que puedo llevar el control de mi salud en mi celular. 
+                Me gusta ver cómo mejora mi ritmo cardíaco con el ejercicio y tener un historial completo de mis signos vitales. 
+                Además, su interfaz es muy fácil de entender."</i>
+            </li>
+            <li class="testimonial">
+              <img src="img/t6.jpg" alt="User" class="user-image" />
+              <h3 class="name">Francisco Mendoza</h3>
+              <i class="feedback">"Nunca pensé que usar tecnología médica sería tan sencillo. Antes mi esposa anotaba todo en una libreta, 
+                pero ahora Vitalence lo hace por nosotros. Si algo sale mal, el sistema nos avisa y podemos contactar al médico al instante. 
+                Me ha dado mucha tranquilidad."</i>
+            </li>
+          </ul>
+          <div class="carousel-dots"></div>
+        </div>
+        <button class="next">&#10095;</button>
+      </div>
+    </section>
+
+    <!-- galeria -->
+    <section class="gallery-section" id="gallery-section">
+      <h2 class="section-title">Galeria</h2>
+      <div class="section-content">
+        <ul class="gallery-list">
+          <li class="gallery-item">
+            <img src="img/g1.png" alt="Gallery" class="gallery-image" />
+          </li>
+          <li class="gallery-item">
+            <img src="img/g2.jpg" alt="Gallery" class="gallery-image" />
+          </li>
+          <li class="gallery-item">
+            <img src="img/g3.png" alt="Gallery" class="gallery-image" />
+          </li>
+          <li class="gallery-item">
+            <img src="img/g4.jpg" alt="Gallery" class="gallery-image" />
+          </li>
+          <li class="gallery-item">
+            <img src="img/g5.jpg" alt="Gallery" class="gallery-image" />
+          </li>
+          <li class="gallery-item">
+            <img src="img/g6.jpg" alt="Gallery" class="gallery-image" />
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- contacto -->
+    <section class="contact-section" id="contact-section">
+      <h2 class="section-title">Contactanos</h2>
+      <div class="section-content">
+        <ul class="contact-info-list">
+          <li class="contact-info">
+            <i class="fa-solid fa-location-dot"></i>
+            <p>123 calle cualquiera colonia alguna, 6600</p>
+          </li>
+          <li class="contact-info">
+            <i class="fa-regular fa-envelope"></i>
+            <p>vitalenceinfo@gmail.com</p>
+          </li>
+          <li class="contact-info">
+            <i class="fa-solid fa-phone"></i>
+            <p>(+52) 81 1234 5678</p>
+          </li>
+          <li class="contact-info">
+            <i class="fa-regular fa-clock"></i>
+            <p>Lunes - Viernes: 9:00 AM - 6:00 PM</p>
+          </li>
+          <li class="contact-info">
+            <i class="fa-regular fa-clock"></i>
+            <p>Sabado - Domingo: 10:00 AM - 3:00 PM</p>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- footer -->
+    <footer class="footer-section">
+      <div class="section-content">
+        <p class="copyright-text">© 2025 Vitalence</p>
+      </div>
+    </footer>
+  </main>
+
+  <script src="js/home.js"></script>
+  <script src="js/main.js"></script>
+  <script src="serviceWorker.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Encuesta de Paciente - Vitalence</title>
+    <link rel="stylesheet" href="/styles/style.css">
+    <link rel="manifest" href="/manifest.json">
+</head>
+<body>
+    <header>
+        <h1>Encuesta de Paciente</h1>
+    </header>
+
+    <main>
+        <form id="surveyForm">
+            <div>
+                <label for="edad">Edad:</label>
+                <input type="number" id="edad" name="edad" required min="0">
+            </div>
+
+            <div>
+                <label for="sexo">Sexo:</label>
+                <select id="sexo" name="sexo" required>
+                    <option value="">Selecciona</option>
+                    <option value="Masculino">Masculino</option>
+                    <option value="Femenino">Femenino</option>
+                    <option value="Otro">Otro</option>
+                </select>
+            </div>
+
+            <div>
+                <label for="peso">Peso (kg):</label>
+                <input type="number" step="0.1" id="peso" name="peso" required>
+            </div>
+
+            <div>
+                <label for="estatura">Estatura (m):</label>
+                <input type="number" step="0.01" id="estatura" name="estatura" required>
+            </div>
+
+            <div>
+                <label for="diagnostico">Diagnóstico o Enfermedad (opcional):</label>
+                <textarea id="diagnostico" name="diagnostico" rows="3"></textarea>
+            </div>
+
+            <div>
+                <button type="submit">Enviar Encuesta</button>
+            </div>
+        </form>
+    </main>
+    
+    <script src="js/survey.js"></script>
+    <script src="js/admin.js"></script>
+    <script src="/serviceWorker.js"></script>
+</body>
+</html>

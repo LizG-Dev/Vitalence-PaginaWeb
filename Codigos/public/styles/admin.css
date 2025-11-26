@@ -1,0 +1,452 @@
+/* ====== FUENTES ====================================================== */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
+
+/* ====== RESETEO ====================================================== */
+* {
+    font-family: "Montserrat", sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* ====== VARIABLES ==================================================== */
+:root {
+    --blue: #2a2185;
+    --blue-dark: #1f1a6d;
+    --white: #fff;
+    --gray-light: #f7f7f9;
+    --gray: #e1e1e6;
+    --gray-medium: #b2b2c4;
+    --black1: #222;
+    --black2: #666;
+    --shadow-light: rgba(0, 0, 0, 0.08);
+}
+
+/* ====== BODY Y CONTENEDOR =========================================== */
+body {
+    min-height: 100vh;
+    overflow-x: hidden;
+    background-color: var(--gray-light);
+    color: var(--black2);
+}
+
+body.loaded #mainContent {
+    visibility: visible;
+}
+#mainContent {
+    visibility: hidden; /* Oculto hasta validar sesión */
+}
+
+
+.container {
+    position: relative;
+    width: 100%;
+}
+/* ====== TOPBAR ======================================================= */
+.topbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 70px;
+    background: var(--white);
+
+    /* Cambiamos la distribución */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 0 20px;
+    z-index: 1000;
+    border-bottom: 3px solid var(--blue);
+    box-shadow: 0 4px 10px var(--shadow-light);
+}
+/* Contenedor centrado absolutamente */
+#welcomeUser {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--blue);
+    user-select: none;
+    text-align: center;
+}
+
+/* Línea decorativa */
+#welcomeUser::after {
+    content: '';
+    display: block;
+    width: 60px;
+    height: 3px;
+    background: var(--blue);
+    margin: 6px auto 0;
+    border-radius: 2px;
+}
+
+/* Ícono de usuario sigue alineado a la derecha */
+.user {
+    margin-left: auto;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 2px solid var(--blue);
+    box-shadow: 0 2px 8px rgba(42,33,133,0.2);
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.user:hover {
+    transform: scale(1.1);
+}
+
+.user img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.navigation {
+    position: fixed;
+    top: 70px;
+    left: 0;
+    width: 260px;
+    height: calc(100% - 70px);
+    background: var(--blue);
+    padding: 30px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow-y: auto;
+    box-shadow: 3px 0 10px var(--shadow-light);
+    transition: none; /* Sidebar estático */
+    z-index: 999;
+}
+
+/* Scroll personalizado */
+.navigation::-webkit-scrollbar {
+    width: 6px;
+}
+
+.navigation::-webkit-scrollbar-thumb {
+    background: rgba(255,255,255,0.35);
+    border-radius: 4px;
+}
+
+/* Sidebar header (logo y título) */
+.sidebar-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.sidebar-logo {
+    width: 70px;
+    height: auto;
+    margin-bottom: 10px;
+}
+
+/* Menú de navegación */
+.navigation ul {
+    width: 100%;
+    padding: 0;
+}
+
+.navigation li.active a {
+    background: var(--white);
+    color: var(--blue);
+    border-radius: 40px;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.25);
+}
+
+.navigation li.active a i {
+    color: var(--blue);
+}
+
+.navigation ul li {
+    list-style: none;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.navigation ul li a {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 15px;
+    width: 85%;
+    padding: 15px 20px;
+    text-decoration: none;
+    color: var(--white);
+    font-size: 1.1rem;
+    font-weight: 600;
+    border-radius: 50px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.navigation ul li a i {
+    font-size: 22px;
+    min-width: 24px;
+    text-align: center;
+}
+
+.navigation ul li a:hover {
+    background: var(--white);
+    color: var(--blue);
+    box-shadow: none; 
+}
+
+.navigation ul li a:hover i {
+    color: var(--blue);
+}
+
+.main {
+    position: relative !important;
+    top: 70px !important;
+    left: 260px !important;
+    width: calc(100% - 260px) !important;
+    min-height: calc(100vh - 70px) !important;
+    z-index: 1000 !important;
+    background: var(--gray-light) !important;
+    padding: 20px !important;
+}
+
+/* ====== TARJETAS ====================================================== */
+.cardBox {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-gap: 30px;
+    margin-bottom: 40px;
+}
+
+.cardBox .card {
+    background: var(--white);
+    padding: 30px;
+    border-radius: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: default;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+    transition: box-shadow 0.3s ease, transform 0.2s ease;
+}
+
+.cardBox .card:hover {
+    box-shadow: 0 15px 40px rgba(42,33,133,0.3);
+    transform: translateY(-5px);
+}
+
+.cardBox .card .numbers {
+    font-weight: 700;
+    font-size: 2.8rem;
+    color: var(--blue);
+}
+
+.cardBox .card .cardName {
+    color: var(--black2);
+    font-size: 1.15rem;
+    margin-top: 5px;
+}
+
+.cardBox .card .iconBx {
+    font-size: 4rem;
+    color: var(--gray-medium);
+}
+
+/* ====== TABLAS ======================================================== */
+.details {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr;
+}
+
+.details .recentOrders {
+    background: var(--white);
+    padding: 25px 30px;
+    min-height: 550px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    border-radius: 20px;
+    overflow-x: auto;
+}
+
+.details .cardHeader {
+    margin-bottom: 20px;
+}
+
+.cardHeader h2 {
+    font-weight: 700;
+    color: var(--blue);
+    font-size: 1.8rem;
+}
+
+/* Tabla */
+.details table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+    font-size: 1rem;
+    color: var(--black2);
+    user-select: none;
+}
+
+.details table thead td {
+    font-weight: 700;
+    padding: 14px 10px;
+    border-bottom: 2px solid var(--gray);
+    color: var(--blue);
+}
+
+.details .recentOrders table tbody tr {
+    border-bottom: 1px solid var(--gray);
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.details .recentOrders table tbody tr:hover {
+    background: #e0e0f0; /* gris-azulado muy suave */
+    color: var(--black1);
+    cursor: pointer;
+}
+
+.details table td {
+    padding: 14px 10px;
+    color: inherit;
+}
+
+/* ====== SCROLLBARS MODERNOS (WEBKIT) ====== */
+.details .recentOrders table::-webkit-scrollbar,
+.navigation::-webkit-scrollbar {
+    height: 8px;
+    width: 8px;
+}
+
+.details .recentOrders table::-webkit-scrollbar-thumb,
+.navigation::-webkit-scrollbar-thumb {
+    background: var(--blue);
+    border-radius: 10px;
+}
+
+@media (max-width: 1200px) {
+
+    .cardBox {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .topbar {
+        padding: 0 15px;
+    }
+}
+
+/* ================== 992px - Tablets horizontales ================== */
+@media (max-width: 992px) {
+
+    .navigation {
+        width: 230px; /* Sidebar más compacto */
+    }
+
+    .main {
+        left: 230px;
+        width: calc(100% - 230px);
+    }
+
+    .cardBox {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+
+    /* SIDEBAR MINI AÚN MÁS EFICIENTE */
+    .navigation {
+        width: 55px !important;   /* antes 70px */
+        padding-top: 10px;
+    }
+
+    .navigation ul li {
+        justify-content: center !important;
+    }
+
+    .navigation ul li i {
+        font-size: 1.3rem !important;
+        margin: 0 !important;
+    }
+
+    .navigation ul li a {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    width: 100% !important;
+    padding: 12px 0 !important;
+    }
+
+    .navigation ul li span {
+        display: none !important; /* sigue ocultando texto */
+    }
+
+    /* MAIN más ancho */
+    .main {
+        left: 55px !important;
+        width: calc(100% - 55px) !important;
+        padding: 10px !important;
+    }
+
+    /* Tarjetas realmente centradas */
+    .cardBox {
+        grid-template-columns: 1fr !important;
+        gap: 10px !important;
+    }
+
+    /* Tarjeta sin tanto espacio lateral */
+    .details .recentOrders {
+        width: 100% !important;
+        padding: 12px !important;
+    }
+
+    .details table {
+        font-size: 0.9rem !important;
+    }
+
+    .details table td {
+        padding: 6px !important;
+    }
+}
+
+/* ================== 480px - Móviles pequeños ================== */
+@media (max-width: 480px) {
+
+    .navigation {
+        width: 200px; /* Sidebar ajustado a móviles pequeños */
+    }
+
+    .main {
+        left: 200px;
+        width: calc(100% - 200px);
+        top: 70px;
+    }
+
+    #welcomeUser {
+        font-size: 1rem;
+    }
+
+    .user {
+        width: 38px;
+        height: 38px;
+    }
+
+    .cardBox {
+        grid-gap: 20px;
+    }
+
+    .details .recentOrders {
+        padding: 12px;
+    }
+
+    .details table td {
+        padding: 8px;
+        font-size: 0.85rem;
+    }
+}
