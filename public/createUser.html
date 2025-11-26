@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+    <link rel="stylesheet" href="styles/createUser.css" />
+    <link rel="manifest" href="manifest.json">
+    <title>Creación de Usuarios - Vitalence</title>
+</head>
+
+<body>
+    <div class="container">
+
+        <!-- SIDEBAR -->
+        <div class="navigation">
+            <ul>
+                <li><a href="admin.html"><i class="fa-solid fa-house"></i><span>Panel principal</span></a></li>
+                <li><a href="userManagement.html"><i class="fa-solid fa-users-gear"></i><span>Gestión de usuarios</span></a></li>
+                <li><a href="createUser.html"><i class="fa-solid fa-user-plus"></i><span>Crear usuario</span></a></li>
+                <li id="logout-btn"><a href="#"><i class="fa-solid fa-right-from-bracket"></i><span>Cerrar sesión</span></a></li>
+            </ul>
+        </div>
+
+        <!-- MAIN -->
+        <div class="main">
+
+            <!-- TOPBAR -->
+            <div class="topbar">
+                
+                <!-- TEXTO CENTRADO BIENVENIDA -->
+                <h2 id="welcomeUser">
+                    Crear nuevo usuario <span id="adminName"></span>
+                </h2>
+
+                <!-- FOTO USUARIO -->
+                <div class="user">
+                    <a href="profilead.html">
+                        <img src="img/user.jpg" alt="Admin">
+                    </a>
+                </div>
+
+            </div>
+            <!-- FIN TOPBAR -->
+
+<form id="createUserForm">
+    <label for="nombre">Nombre:</label>
+    <input type="text" id="nombre" required>
+
+    <label for="email">Email:</label>
+    <input type="email" id="email" required>
+
+    <label for="password">Contraseña:</label>
+    <input type="password" id="password" required>
+
+    <label for="rol">Rol:</label>
+    <select id="rol">
+        <option value="usuario">Usuario</option>
+        <option value="admin">Admin</option>
+    </select>
+
+    <button type="submit">Crear Usuario</button>
+</form>
+
+<div id="statusMessage"></div>
+
+<!-- Script JS -->
+<script src="js/createUser.js"></script>
+<script src="js/main.js"></script>
+<script src="serviceWorker.js"></script>
+</body>
+</html>

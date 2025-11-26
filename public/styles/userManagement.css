@@ -1,0 +1,529 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
+
+* {
+    font-family: "Montserrat", sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --blue: #2a2185;
+    --blue-dark: #1f1a6d;
+    --white: #fff;
+    --gray-light: #f7f7f9;
+    --gray: #e1e1e6;
+    --gray-medium: #b2b2c4;
+    --black1: #222;
+    --black2: #666;
+    --shadow-light: rgba(0, 0, 0, 0.08);
+}
+
+body {
+    min-height: 100vh;
+    overflow-x: hidden;
+    background-color: var(--gray-light);
+    color: var(--black2);
+}
+
+.container {
+    position: relative;
+    width: 100%;
+}
+
+.topbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 70px;
+    background: var(--white);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 20px;
+    z-index: 1000;
+    border-bottom: 3px solid var(--blue);
+    box-shadow: 0 4px 10px var(--shadow-light);
+}
+
+#welcomeUser {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--blue);
+    user-select: none;
+    text-align: center;
+}
+
+#welcomeUser::after {
+    content: '';
+    display: block;
+    width: 60px;
+    height: 3px;
+    background: var(--blue);
+    margin: 6px auto 0;
+    border-radius: 2px;
+}
+
+.user {
+    margin-left: auto;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 2px solid var(--blue);
+    box-shadow: 0 2px 8px rgba(42,33,133,0.2);
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.user:hover {
+    transform: scale(1.1);
+}
+
+.user img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.navigation {
+    position: fixed;
+    top: 70px;
+    left: 0;
+    width: 260px;
+    height: calc(100% - 70px);
+    background: var(--blue);
+    padding: 30px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow-y: auto;
+    box-shadow: 3px 0 10px var(--shadow-light);
+    transition: none;
+    z-index: 999;
+}
+
+.navigation::-webkit-scrollbar {
+    width: 6px;
+}
+
+.navigation::-webkit-scrollbar-thumb {
+    background: rgba(255,255,255,0.35);
+    border-radius: 4px;
+}
+
+.navigation ul {
+    width: 100%;
+    padding: 0;
+}
+
+.navigation ul li {
+    list-style: none;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.navigation ul li a {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 15px;
+    width: 85%;
+    padding: 15px 20px;
+    text-decoration: none;
+    color: var(--white);
+    font-size: 1.1rem;
+    font-weight: 600;
+    border-radius: 50px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.navigation ul li a i {
+    font-size: 22px;
+    min-width: 24px;
+    text-align: center;
+}
+
+.navigation ul li a:hover {
+    background: var(--white);
+    color: var(--blue);
+}
+
+.navigation li.active a {
+    background: var(--white);
+    color: var(--blue);
+    border-radius: 40px;
+    box-shadow: 0 0 10px rgba(255,255,255,0.25);
+}
+
+.navigation li.active a i {
+    color: var(--blue);
+}
+
+.main {
+    position: relative !important;
+    top: 70px !important;
+    left: 260px !important;
+    width: calc(100% - 260px) !important;
+    min-height: calc(100vh - 70px) !important;
+    z-index: 1000 !important;
+    background: var(--gray-light) !important;
+    padding: 15px 20px;
+}
+
+.tableCard {
+    background: #fff;
+    padding: 10px 15px;
+    border-radius: 15px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+    overflow-x: auto;
+    margin-bottom: 30px;
+}
+
+.tableCard table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.95rem;
+}
+
+.tableCard thead th {
+    background-color: #2a2185;
+    color: #fff;
+    font-weight: 600;
+    text-align: left;
+    padding: 12px 15px;
+}
+
+.tableCard tbody td {
+    padding: 12px 15px;
+    border-bottom: 1px solid #ddd;
+}
+
+.tableCard tbody tr:hover {
+    background-color: #f3f3f8;
+    cursor: pointer;
+}
+
+/* Botones de acción en tabla (versión normal) */
+.tableCard tbody td:last-child button,
+.tableCard tbody td:last-child a {
+    background-color: transparent;
+    border: 2px solid #2a2185;
+    color: #2a2185;
+    padding: 8px 16px;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    text-decoration: none;
+}
+
+.tableCard tbody td:last-child button:hover,
+.tableCard tbody td:last-child a:hover {
+    background-color: #2a2185;
+    color: #fff;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 2000;
+    inset: 0;
+    background: rgba(0,0,0,0.45);
+    backdrop-filter: blur(4px);
+    justify-content: center;
+    align-items: center;
+}
+
+.modal.show {
+    display: flex !important;
+}
+
+.modal-content {
+    background: var(--white);
+    width: 340px;               /* ancho fijo */
+    max-width: 90%;             /* evita que se desborde */
+    border-radius: 15px;
+    padding: 15px 25px;         /* menos padding vertical para hacerlo más corto */
+    box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+    animation: fadeIn 0.25s ease;
+    max-height: 70vh;           /* altura máxima: 70% de la pantalla */
+    overflow-y: auto;           /* agrega scroll si el contenido excede la altura */
+}
+
+/* Header del modal */
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal-header h2 {
+    color: var(--blue);
+    font-size: 1.3rem;
+}
+
+.close {
+    font-size: 1.6rem;
+    cursor: pointer;
+    color: var(--black2);
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.close:hover {
+    color: var(--blue);
+}
+
+/* Inputs */
+.modal-body label {
+    display: block;
+    font-weight: 600;
+    margin-top: 12px;
+    font-size: 1rem;
+    color: #333;
+}
+
+.modal-body input {
+    width: 100%;
+    padding: 8px 10px;
+    border-radius: 8px;
+    border: 2px solid var(--gray);
+    margin-top: 4px;
+    outline: none;
+    transition: 0.3s;
+    font-size: 0.9rem;
+}
+
+.modal-body input:focus {
+    border-color: var(--blue);
+}
+
+.modal-body form button {
+        padding: 10px 0;
+        font-size: 1rem;
+    }
+
+.modal-body button:hover {
+    background: var(--blue-dark);
+}
+
+/* Estilo tipo botones de tabla aplicado a "Guardar cambios" */
+.modal-body form button {
+    background-color: transparent;
+    border: 2px solid #2a2185;
+    color: #2a2185;
+    padding: 10px 18px;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    width: 100%;            /* Se adapta al ancho del modal */
+    margin-top: 15px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Hover */
+.modal-body form button:hover {
+    background-color: #2a2185;
+    color: #fff;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-15px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.action-btn {
+    padding: 8px 14px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+    transition: 0.3s ease;
+}
+
+.edit-btn {
+    background: #ffc107;
+    color: #222;
+}
+
+.edit-btn:hover {
+    background: #e0a800;
+}
+
+.delete-btn {
+    background: #dc3545;
+    color: white;
+}
+
+.delete-btn:hover {
+    background: #b52a37;
+}
+
+
+@media (max-width: 1200px) {
+    .topbar { padding: 0 15px; }
+}
+
+@media (max-width: 992px) {
+    .navigation { width: 230px; }
+    .main { left: 230px; width: calc(100% - 230px); }
+}
+
+@media (max-width: 768px) {
+    .navigation { width: 55px !important; padding-top: 10px; }
+    .navigation ul li { justify-content: center !important; }
+    .navigation ul li a { justify-content: center !important; padding: 12px 0 !important; }
+    .navigation ul li a i { font-size: 1.25rem !important; margin: 0 !important; }
+    .navigation ul li a span { display: none !important; }
+    .main { left: 55px !important; width: calc(100% - 55px) !important; padding: 10px !important; }
+    #welcomeUser { font-size: 1.2rem; }
+    .user { width: 45px; height: 45px; }
+    .tableCard table, 
+    .tableCard thead, 
+    .tableCard tbody, 
+    .tableCard th, 
+    .tableCard td, 
+    .tableCard tr {
+        display: block;
+        width: 100%;
+    }
+
+    .tableCard thead {
+        display: none;
+    }
+
+    /* Estilo filas */
+    .tableCard tbody tr {
+        background: #fff; /* blanco para mejor contraste */
+        margin-bottom: 18px;
+        padding: 18px 20px;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        border: 1px solid #ddd;
+        transition: box-shadow 0.3s ease;
+    }
+    .tableCard tbody tr:hover {
+        box-shadow: 0 6px 18px rgba(42,33,133,0.15);
+    }
+
+    /* Celdas con etiqueta antes */
+    .tableCard tbody td {
+        padding: 12px 8px;
+        border-bottom: 1px solid #eee;
+        position: relative;
+        padding-left: 48%;
+        font-size: 0.95rem;
+        color: #333;
+    }
+
+    /* Última celda con acciones */
+    .tableCard tbody td:last-child {
+        border-bottom: none;
+        padding-left: 0;
+        display: flex;
+        justify-content: flex-start;
+        gap: 12px;
+        padding-top: 12px;
+    }
+
+    /* Etiquetas antes del contenido */
+    .tableCard tbody td::before {
+        content: attr(data-label);
+        position: absolute;
+        left: 16px;
+        top: 50%;
+        transform: translateY(-50%);
+        font-weight: 600;
+        color: #555;
+        white-space: nowrap;
+        font-size: 0.85rem;
+        width: 40%;
+        text-align: left;
+    }
+
+    /* Botones estilo */
+    .tableCard tbody td:last-child button,
+    .tableCard tbody td:last-child a {
+        background-color: transparent;
+        border: 2px solid #2a2185;
+        color: #2a2185;
+        padding: 8px 16px;
+        border-radius: 10px;
+        font-weight: 600;
+        font-size: 0.9rem;
+        cursor: pointer;
+        transition: background-color 0.3s ease, color 0.3s ease;
+        text-decoration: none;
+    }
+
+    .tableCard tbody td:last-child::before {
+        content: "" !important;
+        display: none !important;
+    }
+
+    /* Ajustar botones para que no se monten */
+    .tableCard tbody td:last-child {
+        padding-left: 0 !important;
+        display: flex !important;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+        gap: 12px;
+    }
+
+    .tableCard tbody td:last-child button:hover,
+    .tableCard tbody td:last-child a:hover {
+        background-color: #2a2185;
+        color: #fff;
+    }
+
+    .modal-content {
+        padding: 20px 18px;
+    }
+
+    .modal-body form input {
+        padding: 8px 10px;
+        font-size: 0.95rem;
+    }
+
+    .modal-body form button {
+        padding: 10px 0;
+        font-size: 1rem;
+    }
+
+    .modal-body label {
+    font-size: 1rem !important;
+    margin-top: 14px !important;
+    color: #2a2185 !important;
+    display: block !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .navigation { width: 200px; }
+    .main { left: 200px; width: calc(100% - 200px); top: 70px; padding: 10px; }
+    #welcomeUser { font-size: 1rem; }
+    .user { width: 38px; height: 38px; }
+    .tableCard { padding: 12px; margin-top: 14px; }
+}
+
+@media (max-width: 480px) {
+    .navigation { width: 200px; }
+    .main { left: 200px; width: calc(100% - 200px); top: 70px; padding: 10px; }
+    #welcomeUser { font-size: 1rem; }
+    .user { width: 38px; height: 38px; }
+    .tableCard { padding: 10px; margin-top: 12px; }
+}

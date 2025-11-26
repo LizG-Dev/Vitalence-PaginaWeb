@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mis Signos Vitales - Vitalence</title>
+    <link rel="stylesheet" href="styles/vitalSigns.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" />
+    <link rel="manifest" href="/manifest.json">
+</head>
+
+<body>
+    <div class="container">
+        <div class="topbar">
+            <div class="logo">
+                <a href="dashboard.html">
+                <img src="img/logo.jpeg" alt="Vitalence Logo">
+                </a>
+            </div>
+            <div class="search">
+                <h2 id="welcomeUser">Mis Signos Vitales</h2>
+            </div>
+           <div class="user">
+                <a href="profile.html">
+                    <img src="/img/user.jpg" alt="Usuario">
+                </a>
+            </div>
+
+        </div>
+
+        <!-- nav -->
+        <div class="sidebar">
+            <ul>
+                <li><a href="/dashboard.html"><i class="fas fa-home"></i><div>Inicio</div></a></li>
+                <li><a href="/mySurvey.html"><i class="fas fa-file-lines"></i><div>Mi Encuesta</div></a></li>
+                <li><a href="/vitalSigns.html"><i class="fas fa-heartbeat"></i><div>Signos Vitales</div></a></li>
+                <li><a href="#" id="logout-btn"><i class="fas fa-right-from-bracket"></i><div>Cerrar sesión</div></a></li>
+            </ul>
+        </div>
+        
+<main class="content">
+
+    <section id="datos-paciente">
+        <p><strong>Edad:</strong> <span id="edad"></span> años</p>
+        <p><strong>Sexo:</strong> <span id="sexo"></span></p>
+    </section>
+
+    <section id="signos-actuales">
+        <h2>Signos Vitales Actuales</h2>
+        <p><strong>Pulso:</strong> <span id="pulso"></span> bpm</p>
+        <p><strong>Oxigenación (SpO₂):</strong> <span id="spo2"></span> %</p>
+        <p><strong>Temperatura:</strong> <span id="temperatura"></span> °C</p>
+    </section>
+
+    <section id="rangos-normales">
+        <h2>Rangos Normales para mi Grupo Etario</h2>
+        <p><strong>Grupo etario:</strong> <span id="grupo-etario"></span></p>
+        <p><strong>Pulso:</strong> <span id="rango-pulso"></span> bpm</p>
+        <p><strong>Oxigenación:</strong> <span id="rango-spo2"></span> %</p>
+        <p><strong>Temperatura:</strong> <span id="rango-temperatura"></span> °C</p>
+    </section>
+
+    <section id="alertas">
+        <h2>Alertas</h2>
+        <ul id="lista-alertas"></ul>
+    </section>
+</main>
+
+
+<script src="js/vitalSigns.js"></script>
+<script src="js/main.js"></script>
+<script src="serviceWorker.js"></script>
+
+</body>
+</html>

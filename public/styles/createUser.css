@@ -1,0 +1,405 @@
+/* ====== FUENTES ====================================================== */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
+
+/* ====== RESETEO ====================================================== */
+* {
+    font-family: "Montserrat", sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* ====== VARIABLES ==================================================== */
+:root {
+    --blue: #2a2185;
+    --blue-dark: #1f1a6d;
+    --white: #fff;
+    --gray-light: #f7f7f9;
+    --gray: #e1e1e6;
+    --gray-medium: #b2b2c4;
+    --black1: #222;
+    --black2: #666;
+    --shadow-light: rgba(0, 0, 0, 0.08);
+}
+
+/* ====== BODY Y CONTENEDOR =========================================== */
+body {
+    min-height: 100vh;
+    overflow-x: hidden;
+    background-color: var(--gray-light);
+    color: var(--black2);
+}
+
+.container {
+    position: relative;
+    width: 100%;
+}
+
+/* ====== TOPBAR ======================================================= */
+.topbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 70px;
+    background: var(--white);
+
+    /* Cambiamos la distribución */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 0 20px;
+    z-index: 1000;
+    border-bottom: 3px solid var(--blue);
+    box-shadow: 0 4px 10px var(--shadow-light);
+}
+
+/* Contenedor centrado absolutamente */
+#welcomeUser {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--blue);
+    user-select: none;
+    text-align: center;
+}
+
+/* Línea decorativa */
+#welcomeUser::after {
+    content: '';
+    display: block;
+    width: 60px;
+    height: 3px;
+    background: var(--blue);
+    margin: 6px auto 0;
+    border-radius: 2px;
+}
+
+/* Ícono de usuario sigue alineado a la derecha */
+.user {
+    margin-left: auto;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 2px solid var(--blue);
+    box-shadow: 0 2px 8px rgba(42,33,133,0.2);
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.user:hover {
+    transform: scale(1.1);
+}
+
+.user img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* ====== SIDEBAR ====================================================== */
+.navigation {
+    position: fixed;
+    top: 70px;
+    left: 0;
+    width: 260px;
+    height: calc(100% - 70px);
+    background: var(--blue);
+    padding: 30px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow-y: auto;
+    box-shadow: 3px 0 10px var(--shadow-light);
+    transition: none; /* Sidebar estático */
+    z-index: 999;
+}
+
+/* Scroll personalizado */
+.navigation::-webkit-scrollbar {
+    width: 6px;
+}
+
+.navigation::-webkit-scrollbar-thumb {
+    background: rgba(255,255,255,0.35);
+    border-radius: 4px;
+}
+
+/* Sidebar header (logo y título) */
+.sidebar-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.sidebar-logo {
+    width: 70px;
+    height: auto;
+    margin-bottom: 10px;
+}
+
+/* Menú de navegación */
+.navigation ul {
+    width: 100%;
+    padding: 0;
+}
+
+.navigation li.active a {
+    background: var(--white);
+    color: var(--blue);
+    border-radius: 40px;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.25);
+}
+
+.navigation li.active a i {
+    color: var(--blue);
+}
+
+.navigation ul li {
+    list-style: none;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.navigation ul li a {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 15px;
+    width: 85%;
+    padding: 15px 20px;
+    text-decoration: none;
+    color: var(--white);
+    font-size: 1.1rem;
+    font-weight: 600;
+    border-radius: 50px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.navigation ul li a i {
+    font-size: 22px;
+    min-width: 24px;
+    text-align: center;
+}
+
+.navigation ul li a:hover {
+    background: var(--white);
+    color: var(--blue);
+    box-shadow: none; 
+}
+
+.navigation ul li a:hover i {
+    color: var(--blue);
+}
+
+/* ====== MAIN ========================================================== */
+.main {
+    position: absolute;
+    top: 70px;
+    left: 260px;
+    width: calc(100% - 260px);
+    min-height: calc(100vh - 70px);
+    background: var(--gray-light);
+    padding: 40px 40px 60px 40px;
+}
+
+/* ====== SECCIÓN DE FORMULARIO MODERNO ============================ */
+.main h2 {
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: var(--blue-dark);
+    margin-bottom: 20px;
+}
+
+form#createUserForm {
+    background: var(--white);
+    padding: 30px;
+    margin: 0 auto;
+    border-radius: 12px;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 15px;
+    max-width: 600px;
+}
+
+form#createUserForm label {
+    font-weight: 500;
+    color: var(--black1);
+    margin-bottom: 5px;
+}
+
+form#createUserForm input,
+form#createUserForm select {
+    padding: 12px 15px;
+    border-radius: 8px;
+    border: 1px solid var(--gray);
+    font-size: 1rem;
+    outline: none;
+    transition: border 0.3s ease, box-shadow 0.3s ease;
+}
+
+form#createUserForm input:focus,
+form#createUserForm select:focus {
+    border-color: var(--blue);
+    box-shadow: 0 0 5px rgba(42,33,133,0.3);
+}
+
+form#createUserForm button {
+    margin-top: 10px;
+    padding: 12px;
+    border-radius: 8px;
+    border: none;
+    background: var(--blue);
+    color: var(--white);
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.2s ease;
+}
+
+form#createUserForm button:hover {
+    background: var(--blue-dark);
+    transform: translateY(-2px);
+}
+
+/* Mensaje de estado */
+#statusMessage {
+    margin-top: 15px;
+    font-weight: 500;
+    color: var(--blue-dark);
+}
+
+@media (max-width: 1200px) {
+
+    .topbar {
+        padding: 0 15px;
+    }
+
+    .main {
+        padding: 35px;
+    }
+}
+
+@media (max-width: 992px) {
+
+    .navigation {
+        width: 230px;
+    }
+
+    .main {
+        left: 230px;
+        width: calc(100% - 230px);
+    }
+}
+
+@media (max-width: 768px) {
+
+    /* ===== SIDEBAR MINI ===== */
+    .navigation {
+        width: 55px !important;
+        padding-top: 10px;
+        align-items: center !important;
+    }
+
+    .navigation ul li {
+        justify-content: center !important;
+    }
+
+    /* CENTRAR ICONOS */
+    .navigation ul li a {
+        display: flex !important;
+        justify-content: center !important;
+        align-items: center !important;
+        padding: 12px 0 !important;
+        width: 100% !important;
+    }
+
+    .navigation ul li a i {
+        font-size: 1.3rem !important;
+        margin: 0 !important;
+    }
+
+    .navigation ul li a span {
+        display: none !important;
+    }
+
+    /* ===== MAIN AJUSTADO ===== */
+    .main {
+        top: 80px !important;
+        left: 55px !important;
+        width: calc(100% - 55px) !important;
+        padding: 10px !important;
+    }
+
+    /* ===== TOPBAR ===== */
+    .topbar {
+        height: 80px;
+        padding: 0 20px;
+    }
+
+    #welcomeUser {
+        font-size: 1.2rem;
+    }
+
+    .user {
+        width: 45px;
+        height: 45px;
+    }
+
+    /* ===== FORMULARIO ===== */
+    form#createUserForm {
+        padding: 20px;
+        max-width: 90%;
+    }
+
+    form#createUserForm input,
+    form#createUserForm select {
+        font-size: 0.95rem;
+        padding: 10px 12px;
+    }
+
+    form#createUserForm button {
+        padding: 10px;
+    }
+}
+
+@media (max-width: 480px) {
+
+    .navigation {
+        width: 200px;
+    }
+
+    .main {
+        left: 200px;
+        width: calc(100% - 200px);
+        padding: 15px;
+        top: 70px;
+    }
+
+    #welcomeUser {
+        font-size: 1rem;
+    }
+
+    .user {
+        width: 38px;
+        height: 38px;
+    }
+
+    form#createUserForm {
+        padding: 18px;
+    }
+
+    form#createUserForm input,
+    form#createUserForm select {
+        font-size: 0.9rem;
+    }
+}
