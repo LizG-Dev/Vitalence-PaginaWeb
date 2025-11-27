@@ -5,26 +5,20 @@ const { db } = require("../db/conexion");
 // Crear paciente
 router.post("/", async (req, res) => {
     const { usuario_id, edad, sexo, peso, estatura, diagnostico } = req.body;
-
-    // Validar campos
     if (!usuario_id || !edad || !peso || !estatura) {
         return res.status(400).json({ message: "Faltan campos obligatorios" });
     }
 
     try {
-        // Verifica si ya existe
         const snapshot = await db.collection("pacientes").where("usuario_id", "==", usuario_id).get();
         if (!snapshot.empty) {
             return res.status(400).json({ message: "Ya has completado la encuesta." });
         }
-
-        // Obtener nombre
         const usuarioDoc = await db.collection("usuarios").doc(usuario_id).get();
         const usuarioData = usuarioDoc.exists ? usuarioDoc.data() : {};
         const nombres = usuarioData.nombre || "Usuario";
         const apellidos = "";
 
-        // Crear paciente
         const pacienteRef = await db.collection("pacientes").add({
             usuario_id,
             nombres,
@@ -38,15 +32,12 @@ router.post("/", async (req, res) => {
         });
 
         const pacienteId = pacienteRef.id;
-
-        // Insertar peso inicial
         await db.collection("peso_historial").add({
             paciente_id: pacienteId,
             peso,
             fecha_registro: new Date()
         });
 
-        // Insertar signos vitales por defecto
         await db.collection("signos_vitales").add({
             paciente_id: pacienteId,
             frecuencia_cardiaca: 75,
@@ -70,47 +61,36 @@ router.get("/:usuarioId", async (req, res) => {
     const usuarioId = req.params.usuarioId;
 
     try {
-        // 1. Primero, obtenemos el documento del paciente usando el usuario_id
         const pacienteQuery = db.collection("pacientes").where("usuario_id", "==", usuarioId);
         const pacienteSnapshot = await pacienteQuery.get();
-
-        // Si no se encuentra ningún paciente, devolvemos { exists: false }
         if (pacienteSnapshot.empty) {
             console.log(`No se encontró paciente con usuario_id: ${usuarioId}`);
             return res.json({ exists: false });
         }
 
-        // 2. Si encontramos al paciente, obtenemos su ID y sus datos
         const pacienteDoc = pacienteSnapshot.docs[0];
         const pacienteData = pacienteDoc.data();
-        const pacienteId = pacienteDoc.id; // ID del paciente
-
-        // Obtener los datos del usuario registrado
+        const pacienteId = pacienteDoc.id;
         const usuarioDoc = await db.collection("usuarios").doc(usuarioId).get();
         const usuarioData = usuarioDoc.exists ? usuarioDoc.data() : { nombre: "Usuario" };
         const nombreCompleto = usuarioData.nombre;
 
-        // 3. Obtener los signos vitales del paciente usando su ID
         const signosSnapshot = await db.collection("signos_vitales")
-            .where("paciente_id", "==", pacienteId)  // Usamos el ID del paciente aquí
+            .where("paciente_id", "==", pacienteId)
             .orderBy("fecha_registro", "asc")
             .get();
         const signosVitales = signosSnapshot.docs.map(doc => doc.data());
-
-        // 4. Obtener el historial de peso del paciente usando su ID
         const pesoSnapshot = await db.collection("peso_historial")
-            .where("paciente_id", "==", pacienteId)  // Usamos el ID del paciente aquí
+            .where("paciente_id", "==", pacienteId)
             .orderBy("fecha_registro", "asc")
             .get();
         const pesoHistorial = pesoSnapshot.docs.map(doc => doc.data());
-
-        // 5. Devolvemos la información completa del paciente
         res.json({
             exists: true,
             paciente: {
-                id: pacienteDoc.id,  // ID del paciente
+                id: pacienteDoc.id,
                 nombre: nombreCompleto,
-                ...pacienteData  // Los otros campos del paciente
+                ...pacienteData
             },
             signosVitales,
             pesoHistorial
@@ -127,7 +107,6 @@ router.get("/:pacienteId/peso_historial", async (req, res) => {
     const pacienteId = req.params.pacienteId;
 
     try {
-        // Obtener historial por pacienteId
         const pesoSnapshot = await db.collection("peso_historial")
             .where("paciente_id", "==", pacienteId)
             .orderBy("fecha_registro", "asc")
@@ -137,8 +116,6 @@ router.get("/:pacienteId/peso_historial", async (req, res) => {
             id: doc.id,
             ...doc.data()
         }));
-
-        // Devolver arreglo vacío si no hay datos
         return res.json(pesoHistorial);
 
     } catch (err) {
@@ -152,26 +129,21 @@ router.get("/:usuarioId/signos_vitales", async (req, res) => {
     const usuarioId = req.params.usuarioId;
 
     try {
-        // Buscar paciente por usuario_id para obtener el pacienteId
         const pacienteQuery = db.collection("pacientes").where("usuario_id", "==", usuarioId);
         const pacienteSnapshot = await pacienteQuery.get();
 
         if (pacienteSnapshot.empty) {
             return res.status(404).json({ message: "Datos no encontrados" });
         }
-
         const pacienteDoc = pacienteSnapshot.docs[0];
         const pacienteId = pacienteDoc.id;
-
-        // Ahora, obtenemos los signos vitales usando el pacienteId
         const signosSnapshot = await db.collection("signos_vitales")
-            .where("paciente_id", "==", pacienteId)  // Usamos pacienteId para obtener los signos vitales
+            .where("paciente_id", "==", pacienteId)
             .orderBy("fecha_registro", "asc")
             .get();
 
         const signosVitales = signosSnapshot.docs.map(doc => doc.data());
 
-        // Si no hay signos vitales, devolvemos una respuesta vacía
         if (!Array.isArray(signosVitales) || signosVitales.length === 0) {
             return res.status(404).json({ message: "No se encontraron signos vitales para este paciente" });
         }
@@ -184,7 +156,6 @@ router.get("/:usuarioId/signos_vitales", async (req, res) => {
     }
 });
 
-// Función para determinar grupo etario y rangos normales
 function getVitalRanges(edad, sexo = "indefinido") {
     let grupoEtario = "";
 
@@ -281,7 +252,6 @@ router.get("/:usuarioId/latest-vitals", async (req, res) => {
     }
 
     try {
-        // 1. Buscar paciente por usuario_id
         const pacienteSnapshot = await db.collection("pacientes")
             .where("usuario_id", "==", usuarioId)
             .get();
@@ -292,14 +262,10 @@ router.get("/:usuarioId/latest-vitals", async (req, res) => {
 
         const pacienteDoc = pacienteSnapshot.docs[0];
         const pacienteId = pacienteDoc.id;
-
-        // 2. Obtener dispositivo del paciente (documento "1")
         const dispositivoRef = db
             .collection("dispositivos")
-            .doc("1") // ← Ajusta si necesitas usar otro ID dinámico
+            .doc("1")
             .collection("historial");
-
-        // 3. Obtener la última lectura del historial
         const historialSnapshot = await dispositivoRef
             .orderBy("timestamp", "desc")
             .limit(1)
@@ -310,8 +276,6 @@ router.get("/:usuarioId/latest-vitals", async (req, res) => {
         }
 
         const latestReading = historialSnapshot.docs[0].data();
-
-        // Convertir timestamp numérico a objeto Date
         const fechaRegistro = new Date(latestReading.timestamp);
 
         return res.json({
@@ -339,8 +303,6 @@ router.get("/", async (req, res) => {
         for (const doc of pacientesSnapshot.docs) {
             const pacienteData = doc.data();
             const usuarioId = pacienteData.usuario_id;
-
-            // Obtener el usuario correspondiente
             const usuarioDoc = await db.collection("usuarios").doc(usuarioId).get();
             const usuarioData = usuarioDoc.exists ? usuarioDoc.data() : { email: null, nombre: null };
 
@@ -363,22 +325,17 @@ router.get("/", async (req, res) => {
     }
 });
 
-
-// Paciente por id
 router.get("/:id", async (req, res) => {
     const usuarioId = req.params.id;
     if (!usuarioId) return res.status(400).json({ message: "ID inválido" });
 
     try {
-        // Obtener datos del paciente
         const pacienteSnapshot = await db.collection("pacientes").where("usuario_id", "==", usuarioId).limit(1).get();
         if (pacienteSnapshot.empty) {
             return res.status(404).json({ message: "Paciente no encontrado" });
         }
 
         const pacienteData = pacienteSnapshot.docs[0].data();
-
-        // Obtener datos del usuario
         const usuarioDoc = await db.collection("usuarios").doc(usuarioId).get();
         const usuarioData = usuarioDoc.exists ? usuarioDoc.data() : { email: null, nombre: null };
 
@@ -398,8 +355,6 @@ router.get("/:id", async (req, res) => {
     }
 });
 
-
-
 // crear paciente
 router.post("/", async (req, res) => {
     const { usuario_id, edad, sexo, peso, estatura, diagnostico, password } = req.body;
@@ -409,7 +364,6 @@ router.post("/", async (req, res) => {
     }
 
     try {
-        // verificar si ya existe paciente para este usuario
         const existingPacienteSnapshot = await db.collection("pacientes")
             .where("usuario_id", "==", usuario_id)
             .limit(1)
@@ -418,8 +372,6 @@ router.post("/", async (req, res) => {
         if (!existingPacienteSnapshot.empty) {
             return res.status(400).json({ message: "Ya existe un paciente para este usuario" });
         }
-
-        // crear paciente
         const pacienteRef = await db.collection("pacientes").add({
             usuario_id,
             edad,
@@ -429,8 +381,6 @@ router.post("/", async (req, res) => {
             diagnostico: diagnostico || null,
             fecha_registro: new Date()
         });
-
-        // Actualizar pass
         if (password) {
             const hashed = await bcrypt.hash(password, 10);
             const usuarioRef = db.collection("usuarios").doc(usuario_id);
@@ -443,7 +393,6 @@ router.post("/", async (req, res) => {
         res.status(500).json({ message: "Error interno del servidor" });
     }
 });
-
 
 router.put("/:usuarioId", async (req, res) => {
     const usuarioId = req.params.usuarioId;
@@ -470,25 +419,18 @@ router.put("/:usuarioId", async (req, res) => {
 
         const pacienteDoc = pacienteSnapshot.docs[0];
 
-        // Actualizar paciente
         await pacienteDoc.ref.update(updateData);
 
         let nuevoPesoHistorial = null;
-
-        // 🔹 Agregar peso al historial si se actualizó
         if (updateData.peso !== undefined) {
             const pesoRef = await db.collection("peso_historial").add({
                 paciente_id: pacienteDoc.id,
                 peso: updateData.peso,
                 fecha_registro: new Date()
             });
-
-            // Obtener el registro recién creado para devolverlo
             const pesoDoc = await pesoRef.get();
             nuevoPesoHistorial = { id: pesoDoc.id, ...pesoDoc.data() };
         }
-
-        // Actualizar password si viene
         if (password) {
             const hashed = await bcrypt.hash(password, 10);
             await db.collection("usuarios").doc(usuarioId).update({ password: hashed });
@@ -496,7 +438,7 @@ router.put("/:usuarioId", async (req, res) => {
 
         res.json({
             message: "Paciente actualizado correctamente",
-            nuevoPesoHistorial // <-- enviar registro de peso recién agregado
+            nuevoPesoHistorial
         });
     } catch (err) {
         console.error("Error al obtener paciente:", err);
@@ -510,7 +452,6 @@ router.delete("/:usuarioId", async (req, res) => {
     if (!usuarioId) return res.status(400).json({ message: "ID de usuario inválido" });
 
     try {
-        // Buscar el paciente por usuario id
         const pacienteSnapshot = await db.collection("pacientes")
             .where("usuario_id", "==", usuarioId)
             .limit(1)
@@ -521,8 +462,6 @@ router.delete("/:usuarioId", async (req, res) => {
         }
 
         const pacienteDoc = pacienteSnapshot.docs[0];
-
-        // Eliminar paciente
         await pacienteDoc.ref.delete();
         await db.collection("usuarios").doc(usuarioId).delete();
 

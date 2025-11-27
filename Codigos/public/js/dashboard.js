@@ -1,9 +1,5 @@
 document.addEventListener("DOMContentLoaded", async () => {
     console.log("Iniciando dashboard.js");
-
-    // =============================
-    // ENCRIPTAR Y DESENCRIPTAR
-    // =============================
     function hash(value) {
         return btoa(JSON.stringify(value)).split("").reverse().join("");
     }
@@ -15,10 +11,6 @@ document.addEventListener("DOMContentLoaded", async () => {
             return null;
         }
     }
-
-    // =============================
-    // OBTENER DATOS DEL USUARIO (DESENCRIPTADOS)
-    // =============================
     const hashedUid = localStorage.getItem("uid");
     const hashedNombre = localStorage.getItem("usuarioNombre");
     const hashedRol = localStorage.getItem("usuarioRol");
@@ -53,10 +45,6 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     let pacienteId = null;
     let pesoChartInstance = null;
-
-    // =============================
-    // OFFLINE: CARGAR DATOS HASHEADOS
-    // =============================
     if (!navigator.onLine) {
         console.warn("Sin internet. Cargando datos guardados.");
 
@@ -73,10 +61,6 @@ document.addEventListener("DOMContentLoaded", async () => {
 
         return;
     }
-
-    // =============================
-    // MOSTRAR DATOS MIENTRAS CARGA ONLINE
-    // =============================
     const mostrarTarjeta = (id, key) => {
         const el = document.getElementById(id);
         const valor = unhash(localStorage.getItem(key));
@@ -87,10 +71,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     mostrarTarjeta("pulso", `pulso_${hashedUid}`);
     mostrarTarjeta("oxigenacion", `oxigenacion_${hashedUid}`);
     mostrarTarjeta("temperatura", `temperatura_${hashedUid}`);
-
-    // =============================
-    // OBTENER PACIENTE ONLINE
-    // =============================
     try {
         const response = await fetch(`/api/patients/${usuarioId}`, {
             headers: { "Authorization": `Bearer ${localStorage.getItem("token")}` }
@@ -116,9 +96,6 @@ document.addEventListener("DOMContentLoaded", async () => {
         console.error("Error al obtener paciente:", err);
     }
 
-    // =============================
-    // TARJETAS DEL PACIENTE
-    // =============================
     function updatePatientCards(paciente) {
         const setText = (id, value) => {
             const el = document.getElementById(id);
@@ -128,10 +105,6 @@ document.addEventListener("DOMContentLoaded", async () => {
         setText("peso", paciente.peso ? `${paciente.peso} kg` : "N/A");
         localStorage.setItem(`peso_${hashedUid}`, hash(paciente.peso ?? "N/A"));
     }
-
-    // =============================
-    // SIGNOS VITALES
-    // =============================
     async function cargarSignosVitales(usuarioId) {
         try {
             const response = await fetch(`/api/patients/${usuarioId}/latest-vitals`);
@@ -160,10 +133,6 @@ document.addEventListener("DOMContentLoaded", async () => {
             console.error("Error en cargarSignosVitales:", err);
         }
     }
-
-    // =============================
-    // HISTORIAL DE PESO (GRÁFICO)
-    // =============================
     async function cargarPesoHistorial(pacienteId) {
         try {
             const response = await fetch(`/api/patients/${pacienteId}/peso_historial`);
@@ -184,14 +153,8 @@ document.addEventListener("DOMContentLoaded", async () => {
             if (!canvas) return;
 
             const ctx = canvas.getContext("2d");
-
-            // =============================
-            // CONVERTIR FECHAS CORRECTAMENTE
-            // =============================
             const labels = pesoHistorial.map(entry => {
                 let dateValue = entry.fecha_registro;
-
-                // Si es objeto tipo Firestore/seconds
                 if (dateValue && dateValue._seconds) {
                     dateValue = new Date(dateValue._seconds * 1000);
                 } else {

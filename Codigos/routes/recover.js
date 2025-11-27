@@ -60,9 +60,6 @@ router.post("/verify-answers", async (req, res) => {
   }
 });
 
-// ==========================
-// Paso 3: Cambiar contraseña
-// ==========================
 router.post("/change-password", async (req, res) => {
   const { email, newPassword, confirmPassword } = req.body;
 

@@ -3,7 +3,6 @@ const router = express.Router();
 const bcrypt = require("bcrypt");
 const { db } = require("../db/conexion");
 
-// --- Obtener preguntas de seguridad ---
 router.get("/:usuarioId", async (req, res) => {
   const { usuarioId } = req.params;
   try {
@@ -25,7 +24,6 @@ router.get("/:usuarioId", async (req, res) => {
   }
 });
 
-// --- Guardar o actualizar preguntas de seguridad ---
 router.post("/guardar", async (req, res) => {
   const { usuarioId, colorFavorito, nombreMascota, cancionFavorita, nombreMama } = req.body;
   if (!usuarioId || !colorFavorito || !nombreMascota || !cancionFavorita || !nombreMama) {
@@ -51,7 +49,6 @@ router.post("/guardar", async (req, res) => {
   }
 });
 
-// --- Verificar respuestas de seguridad ---
 router.post("/verify-answers", async (req, res) => {
   const { usuarioId, respuestas } = req.body;
   if (!usuarioId || !respuestas) return res.status(400).json({ message: "Faltan datos" });
@@ -84,7 +81,6 @@ router.post("/verify-answers", async (req, res) => {
   }
 });
 
-// --- Cambiar contraseña ---
 router.post("/change-password", async (req, res) => {
   const { usuarioId, newPassword, confirmPassword } = req.body;
   if (!usuarioId || !newPassword || !confirmPassword) return res.status(400).json({ message: "Faltan campos" });

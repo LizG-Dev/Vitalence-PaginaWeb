@@ -1,7 +1,4 @@
 document.addEventListener("DOMContentLoaded", async () => {
-    // =============================
-    // FUNCIONES HASH
-    // =============================
     function hashValue(value) {
         return btoa(JSON.stringify(value)).split("").reverse().join("");
     }
@@ -13,10 +10,6 @@ document.addEventListener("DOMContentLoaded", async () => {
             return null;
         }
     }
-
-    // =============================
-    // OBTENER UID HASHEADO
-    // =============================
     const hashedUid = localStorage.getItem("uid");
     const message = document.getElementById("message");
     const form = document.getElementById("surveyForm");
@@ -34,8 +27,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 
     let pesoAnterior = null;
-
-    // 🔹 Cargar datos del paciente desde base de datos
     async function loadData() {
         try {
             const res = await fetch(`/api/patients/${usuarioId}`);
@@ -52,19 +43,15 @@ document.addEventListener("DOMContentLoaded", async () => {
             }
 
             pesoAnterior = parseFloat(patient.peso);
-
-            // Guardar en localStorage hasheado
             localStorage.setItem(`pacienteCache_${hashedUid}`, hashValue(patient));
         } catch (error) {
             console.error("Error al cargar los datos desde el servidor:", error);
             if (message) {
-                message.textContent = "❌ Error al cargar los datos desde el servidor.";
+                message.textContent = "Error al cargar los datos desde el servidor.";
                 message.style.color = "red";
             }
         }
     }
-
-    // 🔹 Actualizar datos en el servidor
     async function updateData(dataToUpdate) {
         try {
             const res = await fetch(`/api/patients/${usuarioId}`, {
@@ -77,7 +64,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             if (!res.ok) throw new Error(responseData.message || "Error desconocido");
 
             if (message) {
-                message.textContent = responseData.message || "✅ Datos actualizados correctamente.";
+                message.textContent = responseData.message || "Datos actualizados correctamente.";
                 message.style.color = "green";
             }
 
@@ -85,13 +72,11 @@ document.addEventListener("DOMContentLoaded", async () => {
         } catch (error) {
             console.error("Error al actualizar los datos:", error);
             if (message) {
-                message.textContent = "❌ Error al actualizar los datos.";
+                message.textContent = "Error al actualizar los datos.";
                 message.style.color = "red";
             }
         }
     }
-
-    // 🔹 Enviar formulario
     form?.addEventListener("submit", async (e) => {
         e.preventDefault();
 
@@ -114,14 +99,10 @@ document.addEventListener("DOMContentLoaded", async () => {
         await updateData(dataToUpdate);
         pesoAnterior = pesoNuevo;
     });
-
-    // 🔹 Cerrar sesión
     document.getElementById("logout-btn")?.addEventListener("click", (e) => {
         e.preventDefault();
         localStorage.clear();
         window.location.href = "index.html";
     });
-
-    // 🔹 Cargar datos iniciales
     await loadData();
 });

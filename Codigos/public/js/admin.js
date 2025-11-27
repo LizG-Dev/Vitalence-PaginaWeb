@@ -1,9 +1,4 @@
-// --- SESIÓN PERSISTENTE CON HASH UTF-8 ---
 window.addEventListener("DOMContentLoaded", async () => {
-
-    // =============================
-    // FUNCIONES HASH UTF-8
-    // =============================
     function hashValue(value) {
         return btoa(unescape(encodeURIComponent(JSON.stringify(value)))).split("").reverse().join("");
     }
@@ -15,10 +10,6 @@ window.addEventListener("DOMContentLoaded", async () => {
             return null;
         }
     }
-
-    // =============================
-    // OBTENER SESIÓN ADMIN
-    // =============================
     const hashedUid = localStorage.getItem("uid");
     const hashedRol = localStorage.getItem("usuarioRol");
     const hashedNombre = localStorage.getItem("usuarioNombre");
@@ -30,15 +21,11 @@ window.addEventListener("DOMContentLoaded", async () => {
 
     const usuarioId = unhashValue(hashedUid);
     const usuarioNombre = unhashValue(hashedNombre);
-
-    // --- Mostrar nombre del admin ---
     const nameSpan = document.getElementById("adminName");
     if (nameSpan) nameSpan.textContent = usuarioNombre;
 
     const welcomeEl = document.getElementById("welcomeUser");
     if (welcomeEl) welcomeEl.style.visibility = "visible";
-
-    // --- Cerrar sesión ---
     const logoutBtns = document.querySelectorAll("#logout-btn, .fa-right-from-bracket");
     logoutBtns.forEach(btn => {
         btn.addEventListener("click", (e) => {
@@ -47,8 +34,6 @@ window.addEventListener("DOMContentLoaded", async () => {
             window.location.href = "index.html";
         });
     });
-
-    // --- CARGA DE DATOS + SOPORTE OFFLINE ---
     async function loadDashboardData() {
         try {
             const [statsRes, usersRes] = await Promise.all([
@@ -61,7 +46,6 @@ window.addEventListener("DOMContentLoaded", async () => {
             const stats = await statsRes.json();
             const users = await usersRes.json();
 
-            // Guardar en localStorage para modo offline
             localStorage.setItem("dashboardStats", hashValue(stats));
             localStorage.setItem("dashboardUsers", hashValue(users));
 
@@ -80,8 +64,7 @@ window.addEventListener("DOMContentLoaded", async () => {
             }
         }
     }
-
-    // --- FUNCIÓN PARA RENDERIZAR DATOS ---
+    
     function renderDashboard(stats, users) {
         document.getElementById("totalUsers").textContent = stats.totalUsers || 0;
         document.getElementById("activeUsers").textContent = stats.activeUsers || 0;

@@ -1,5 +1,3 @@
-// Manejo del back en index
-
 const express = require("express");
 const router = express.Router();
 const bcrypt = require("bcrypt");
@@ -82,7 +80,6 @@ router.post("/login", async (req, res) => {
   }
 });
 
-// verify-email
 router.post("/verify-email", async (req, res) => {
   const { email } = req.body;
 

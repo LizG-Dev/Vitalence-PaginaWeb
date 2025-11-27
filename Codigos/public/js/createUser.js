@@ -1,7 +1,4 @@
 window.addEventListener("DOMContentLoaded", () => {
-    // =============================
-    // FUNCIONES HASH UTF-8
-    // =============================
     function hashValue(value) {
         return btoa(unescape(encodeURIComponent(JSON.stringify(value)))).split("").reverse().join("");
     }
@@ -14,9 +11,6 @@ window.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    // =============================
-    // SESIÓN PERSISTENTE Y VALIDACIÓN
-    // =============================
     const hashedUid = localStorage.getItem("uid");
     const hashedRol = localStorage.getItem("usuarioRol");
     const hashedNombre = localStorage.getItem("usuarioNombre");
@@ -30,7 +24,6 @@ window.addEventListener("DOMContentLoaded", () => {
             window.location.href = "index.html";
         }
     } else {
-        // Redirección según rol y página
         if (window.location.pathname.endsWith("admin.html") && usuarioRol !== "admin") {
             window.location.href = "dashboard.html";
         }
@@ -38,10 +31,6 @@ window.addEventListener("DOMContentLoaded", () => {
             window.location.href = "admin.html";
         }
     }
-
-    // =============================
-    // CREAR USUARIO (solo admin)
-    // =============================
     const createUserForm = document.getElementById("createUserForm");
     if (createUserForm && usuarioRol === "admin") {
         createUserForm.addEventListener("submit", async (e) => {
@@ -88,10 +77,6 @@ window.addEventListener("DOMContentLoaded", () => {
             }
         });
     }
-
-    // =============================
-    // CERRAR SESIÓN
-    // =============================
     const logoutBtn = document.getElementById("logout-btn");
     if (logoutBtn) {
         logoutBtn.addEventListener("click", (e) => {

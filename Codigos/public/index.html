@@ -17,12 +17,6 @@
         <div class="form-container sign-up">
             <form id="registerForm">
                 <h1>Crea tu cuenta</h1>
-               <!-- <div class="social-icons">
-                    <a href="#" class="icon"><i class="fa-brands fa-google-plus-g"></i></a>
-                    <a href="#" class="icon"><i class="fa-brands fa-facebook-f"></i></a>
-                    <a href="#" class="icon"><i class="fa-brands fa-github"></i></a>
-                    <a href="#" class="icon"><i class="fa-brands fa-linkedin-in"></i></a>
-                </div>-->
                 <span>Usa tu correo electrónico para registrarte</span>
                 <input type="text" name="nombre" placeholder="Nombre de usuario" required>
                 <input type="email" name="email" placeholder="Correo electrónico" required>
@@ -36,12 +30,6 @@
         <div class="form-container sign-in">
             <form id="loginForm">
                 <h1>Inicia Sesión</h1>
-                <!-- <div class="social-icons">
-                    <a href="#" class="icon"><i class="fa-brands fa-google-plus-g"></i></a>
-                    <a href="#" class="icon"><i class="fa-brands fa-facebook-f"></i></a>
-                    <a href="#" class="icon"><i class="fa-brands fa-github"></i></a>
-                    <a href="#" class="icon"><i class="fa-brands fa-linkedin-in"></i></a>
-                </div>-->
                 <span>Usa tu correo para ingresar</span>
                 <input type="email" name="email" placeholder="Correo electrónico" required>
                 <input type="password" name="password" placeholder="Contraseña" required>
@@ -49,8 +37,6 @@
                 <button type="submit">Ingresar</button>
             </form>
         </div>
-
-        <!-- Toggle panels -->
         <div class="toggle-container">
             <div class="toggle">
                 <div class="toggle-panel toggle-left">
@@ -70,14 +56,12 @@
   <div class="modal-content">
     <h2>Recuperar contraseña</h2>
 
-    <!-- Paso 1: Correo -->
     <div id="step1">
       <p>Introduce tu correo electrónico:</p>
       <input type="email" id="recoverEmail" placeholder="Correo electrónico" required>
       <button id="verifyEmailBtn">Siguiente</button>
     </div>
 
-    <!-- Paso 2: Preguntas de seguridad -->
     <div id="step2" style="display:none;">
       <p>Responde tus preguntas de seguridad:</p>
       <input type="text" id="colorFavorito" placeholder="¿Cuál es tu color favorito?" required>
@@ -87,7 +71,6 @@
       <button id="verifyAnswersBtn">Verificar respuestas</button>
     </div>
 
-    <!-- Paso 3: Nueva contraseña -->
     <div id="step3" style="display:none;">
       <p>Ingresa tu nueva contraseña:</p>
       <div class="password-field">
@@ -105,9 +88,6 @@
   </div>
 </div>
     </div>
-
-    <!-- Scripts -->
-    
     <script src="js/userauth.js"></script>
     <script src="js/script.js"></script>
     <script src="js/main.js"></script>

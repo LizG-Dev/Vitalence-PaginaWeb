@@ -1,7 +1,4 @@
 document.addEventListener("DOMContentLoaded", async () => {
-    // =============================
-    // FUNCIONES HASH SEGURAS (UTF-8)
-    // =============================
     function hashValue(value) {
         const str = JSON.stringify(value);
         return btoa(unescape(encodeURIComponent(str))).split("").reverse().join("");
@@ -15,10 +12,6 @@ document.addEventListener("DOMContentLoaded", async () => {
             return null;
         }
     }
-
-    // =============================
-    // OBTENER UID HASHEADO
-    // =============================
     const hashedUid = localStorage.getItem("uid");
     if (!hashedUid) {
         alert("Inicia sesión para acceder a tu perfil.");
@@ -32,10 +25,6 @@ document.addEventListener("DOMContentLoaded", async () => {
         window.location.href = "index.html";
         return;
     }
-
-    // =============================
-    // MODALES (sin cambios)
-    // =============================
     const recoverModal = document.getElementById("recoverModal");
     const recoverBtn = document.getElementById("recoverBtn");
     const cancelRecover = document.getElementById("cancelRecover");
@@ -76,20 +65,12 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     document.getElementById("cancelVerify")?.addEventListener("click", () => cerrarModal("changePasswordModal"));
     document.getElementById("cancelChangePassword")?.addEventListener("click", () => cerrarModal("changePasswordModal"));
-
-    // =============================
-    // LOGOUT
-    // =============================
     const logoutBtn = document.getElementById("logout-btn");
     logoutBtn?.addEventListener("click", e => {
         e.preventDefault();
         localStorage.clear();
         window.location.href = "index.html";
     });
-
-    // =============================
-    // CARGAR DATOS DEL USUARIO Y PREGUNTAS (HASHEADOS)
-    // =============================
     let data = {};
     try {
         const res = await fetch(`/api/preguntasSeguridad/${usuarioId}`);
@@ -102,7 +83,6 @@ document.addEventListener("DOMContentLoaded", async () => {
         data = unhashValue(localStorage.getItem(`usuarioData_${hashedUid}`)) || {};
     }
 
-    // Mostrar nombre y correo
     const userNameEl = document.getElementById("userName");
     const userEmailEl = document.getElementById("userEmail");
     if (data.usuario) {
@@ -118,7 +98,6 @@ document.addEventListener("DOMContentLoaded", async () => {
         localStorage.setItem(`usuario_${hashedUid}`, hashValue(usuarioLocal));
     }
 
-    // Mostrar preguntas
     const preguntas = data.preguntas || {};
     const setInputValue = (id, value) => {
         const el = document.getElementById(id);
@@ -128,10 +107,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     setInputValue("mascota", preguntas.nombreMascota);
     setInputValue("cancion", preguntas.cancionFavorita);
     setInputValue("madre", preguntas.nombreMama);
-
-    // =============================
-    // GUARDAR PREGUNTAS DE SEGURIDAD (HASHEADO)
-    // =============================
     const form = document.getElementById("formPreguntas");
     form?.addEventListener("submit", async e => {
         e.preventDefault();
@@ -161,16 +136,13 @@ document.addEventListener("DOMContentLoaded", async () => {
                 form.reset();
                 localStorage.setItem(`preguntas_${hashedUid}`, hashValue(payload));
             } else {
-                alert(`⚠️ ${result.message || "Error al guardar las preguntas"}`);
+                alert(`${result.message || "Error al guardar las preguntas"}`);
             }
         } catch (error) {
             console.error("Error guardando preguntas:", error);
         }
     });
 
-    // =============================
-    // CAMBIO DE CONTRASEÑA (HASHEADO)
-    // =============================
     const changePasswordForm = document.getElementById("changePasswordForm");
     const formPreguntasCambio = document.getElementById("formPreguntasCambio");
 
@@ -229,7 +201,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             const result = await res.json();
 
             if (res.ok) {
-                alert("✅ Contraseña actualizada correctamente.");
+                alert("Contraseña actualizada correctamente.");
                 const usuarioLocal = unhashValue(localStorage.getItem(`usuario_${hashedUid}`)) || {};
                 usuarioLocal.password = newPassword;
                 localStorage.setItem(`usuario_${hashedUid}`, hashValue(usuarioLocal));
@@ -241,17 +213,13 @@ document.addEventListener("DOMContentLoaded", async () => {
                 document.getElementById("preguntasSection")?.setAttribute("style", "display:block");
                 document.getElementById("passwordSection")?.setAttribute("style", "display:none");
             } else {
-                alert(`⚠️ ${result.message || "No se pudo cambiar la contraseña."}`);
+                alert(`${result.message || "No se pudo cambiar la contraseña."}`);
             }
         } catch (error) {
             console.error("Error cambiando contraseña:", error);
             alert("Error al cambiar contraseña. Inténtalo más tarde.");
         }
     });
-
-    // =============================
-    // Mostrar/Ocultar contraseña
-    // =============================
     const passwordInput = document.getElementById("password");
     const togglePassword = document.getElementById("togglePassword");
 
