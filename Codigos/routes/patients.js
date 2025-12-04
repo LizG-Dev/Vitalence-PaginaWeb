@@ -2,9 +2,9 @@ const express = require("express");
 const router = express.Router();
 const { db } = require("../db/conexion");
 
-// Crear paciente
 router.post("/", async (req, res) => {
     const { usuario_id, edad, sexo, peso, estatura, diagnostico } = req.body;
+
     if (!usuario_id || !edad || !peso || !estatura) {
         return res.status(400).json({ message: "Faltan campos obligatorios" });
     }
@@ -14,6 +14,7 @@ router.post("/", async (req, res) => {
         if (!snapshot.empty) {
             return res.status(400).json({ message: "Ya has completado la encuesta." });
         }
+
         const usuarioDoc = await db.collection("usuarios").doc(usuario_id).get();
         const usuarioData = usuarioDoc.exists ? usuarioDoc.data() : {};
         const nombres = usuarioData.nombre || "Usuario";
@@ -32,6 +33,7 @@ router.post("/", async (req, res) => {
         });
 
         const pacienteId = pacienteRef.id;
+
         await db.collection("peso_historial").add({
             paciente_id: pacienteId,
             peso,
@@ -56,40 +58,61 @@ router.post("/", async (req, res) => {
     }
 });
 
-// Obtener paciente
 router.get("/:usuarioId", async (req, res) => {
     const usuarioId = req.params.usuarioId;
 
     try {
-        const pacienteQuery = db.collection("pacientes").where("usuario_id", "==", usuarioId);
-        const pacienteSnapshot = await pacienteQuery.get();
+        // Buscar paciente en la colección
+        const pacienteSnapshot = await db.collection("pacientes")
+            .where("usuario_id", "==", usuarioId)
+            .limit(1)
+            .get();
+
+        // Obtener datos del usuario
+        const usuarioDoc = await db.collection("usuarios").doc(usuarioId).get();
+        const usuarioData = usuarioDoc.exists ? usuarioDoc.data() : { nombre: "Usuario" };
+
         if (pacienteSnapshot.empty) {
-            console.log(`No se encontró paciente con usuario_id: ${usuarioId}`);
-            return res.json({ exists: false });
+            // Si no existe paciente, retornamos objeto parcial para survey
+            return res.json({
+                exists: false,
+                paciente: {
+                    nombres: usuarioData.nombre || "Usuario",
+                    apellidos: "",
+                    edad: null,
+                    sexo: null,
+                    peso: null,
+                    estatura: null,
+                    diagnostico: ""
+                }
+            });
         }
 
+        // Si existe paciente
         const pacienteDoc = pacienteSnapshot.docs[0];
         const pacienteData = pacienteDoc.data();
         const pacienteId = pacienteDoc.id;
-        const usuarioDoc = await db.collection("usuarios").doc(usuarioId).get();
-        const usuarioData = usuarioDoc.exists ? usuarioDoc.data() : { nombre: "Usuario" };
-        const nombreCompleto = usuarioData.nombre;
 
+        // Obtener signos vitales
         const signosSnapshot = await db.collection("signos_vitales")
             .where("paciente_id", "==", pacienteId)
             .orderBy("fecha_registro", "asc")
             .get();
         const signosVitales = signosSnapshot.docs.map(doc => doc.data());
+
+        // Obtener historial de peso
         const pesoSnapshot = await db.collection("peso_historial")
             .where("paciente_id", "==", pacienteId)
             .orderBy("fecha_registro", "asc")
             .get();
         const pesoHistorial = pesoSnapshot.docs.map(doc => doc.data());
+
+        // Respuesta final
         res.json({
             exists: true,
             paciente: {
                 id: pacienteDoc.id,
-                nombre: nombreCompleto,
+                nombre: usuarioData.nombre,
                 ...pacienteData
             },
             signosVitales,
@@ -102,7 +125,6 @@ router.get("/:usuarioId", async (req, res) => {
     }
 });
 
-// Obtener historial de peso usando el pacienteId
 router.get("/:pacienteId/peso_historial", async (req, res) => {
     const pacienteId = req.params.pacienteId;
 
@@ -124,7 +146,6 @@ router.get("/:pacienteId/peso_historial", async (req, res) => {
     }
 });
 
-// Obtener signos vitales usando el pacienteId
 router.get("/:usuarioId/signos_vitales", async (req, res) => {
     const usuarioId = req.params.usuarioId;
 
@@ -133,8 +154,9 @@ router.get("/:usuarioId/signos_vitales", async (req, res) => {
         const pacienteSnapshot = await pacienteQuery.get();
 
         if (pacienteSnapshot.empty) {
-            return res.status(404).json({ message: "Datos no encontrados" });
+            return res.status(404).json({ message: "Paciente no encontrado" });
         }
+
         const pacienteDoc = pacienteSnapshot.docs[0];
         const pacienteId = pacienteDoc.id;
         const signosSnapshot = await db.collection("signos_vitales")
@@ -143,7 +165,6 @@ router.get("/:usuarioId/signos_vitales", async (req, res) => {
             .get();
 
         const signosVitales = signosSnapshot.docs.map(doc => doc.data());
-
         if (!Array.isArray(signosVitales) || signosVitales.length === 0) {
             return res.status(404).json({ message: "No se encontraron signos vitales para este paciente" });
         }
@@ -213,7 +234,6 @@ function getVitalRanges(edad, sexo = "indefinido") {
     };
 }
 
-// Obtener rangos normales según edad y sexo del paciente
 router.get("/:usuarioId/vital-ranges", async (req, res) => {
     const usuarioId = req.params.usuarioId;
     if (!usuarioId) {
@@ -243,8 +263,6 @@ router.get("/:usuarioId/vital-ranges", async (req, res) => {
         return res.status(500).json({ message: "Error del servidor", error: err });
     }
 });
-
-// Obtener últimos signos vitales registrados del paciente
 router.get("/:usuarioId/latest-vitals", async (req, res) => {
     const usuarioId = req.params.usuarioId;
     if (!usuarioId) {
@@ -266,6 +284,7 @@ router.get("/:usuarioId/latest-vitals", async (req, res) => {
             .collection("dispositivos")
             .doc("1")
             .collection("historial");
+
         const historialSnapshot = await dispositivoRef
             .orderBy("timestamp", "desc")
             .limit(1)
@@ -291,37 +310,65 @@ router.get("/:usuarioId/latest-vitals", async (req, res) => {
     }
 });
 
-//Pacientes lista
-router.get("/", async (req, res) => {
+router.post("/", async (req, res) => {
+    const { usuario_id, edad, sexo, peso, estatura, diagnostico } = req.body;
+
+    if (!usuario_id || !edad || !peso || !estatura || !sexo) {
+        return res.status(400).json({ message: "Faltan campos obligatorios" });
+    }
+
     try {
-        const pacientesSnapshot = await db.collection("pacientes").orderBy("usuario_id", "asc").get();
-        if (pacientesSnapshot.empty) {
-            return res.json([]);
+        // Verificar si ya existe paciente
+        const existingPaciente = await db.collection("pacientes")
+            .where("usuario_id", "==", usuario_id)
+            .limit(1)
+            .get();
+
+        if (!existingPaciente.empty) {
+            return res.status(400).json({ message: "Paciente ya existe" });
         }
 
-        const pacientes = [];
-        for (const doc of pacientesSnapshot.docs) {
-            const pacienteData = doc.data();
-            const usuarioId = pacienteData.usuario_id;
-            const usuarioDoc = await db.collection("usuarios").doc(usuarioId).get();
-            const usuarioData = usuarioDoc.exists ? usuarioDoc.data() : { email: null, nombre: null };
+        // Obtener usuario
+        const usuarioDoc = await db.collection("usuarios").doc(usuario_id).get();
+        const usuarioData = usuarioDoc.exists ? usuarioDoc.data() : { nombre: "Usuario" };
+        const nombres = usuarioData.nombre || "Usuario";
 
-            pacientes.push({
-                id: usuarioId,
-                nombre: usuarioData.nombre || "Sin nombre",
-                email: usuarioData.email,
-                edad: pacienteData.edad,
-                sexo: pacienteData.sexo,
-                peso: pacienteData.peso,
-                estatura: pacienteData.estatura,
-                diagnostico: pacienteData.diagnostico
-            });
-        }
+        // Crear paciente
+        const pacienteRef = await db.collection("pacientes").add({
+            usuario_id,
+            nombres,
+            apellidos: "",
+            edad,
+            sexo,
+            peso,
+            estatura,
+            diagnostico: diagnostico || "",
+            fecha_registro: new Date()
+        });
 
-        res.json(pacientes);
+        // Crear registro inicial de peso
+        await db.collection("peso_historial").add({
+            paciente_id: pacienteRef.id,
+            peso,
+            fecha_registro: new Date()
+        });
+
+        // Crear registro inicial de signos vitales
+        await db.collection("signos_vitales").add({
+            paciente_id: pacienteRef.id,
+            frecuencia_cardiaca: 75,
+            presion_arterial: "120/80",
+            frecuencia_respiratoria: 18,
+            oxigenacion: 98,
+            temperatura: 36.6,
+            fecha_registro: new Date()
+        });
+
+        res.status(201).json({ message: "Paciente creado correctamente", pacienteId: pacienteRef.id });
+
     } catch (err) {
-       console.error("Error al obtener paciente:", err);
-        res.status(500).json({ message: "Error interno del servidor" });
+        console.error("Error al crear paciente:", err);
+        res.status(500).json({ message: "Error interno", error: err });
     }
 });
 
@@ -351,11 +398,10 @@ router.get("/:id", async (req, res) => {
         });
     } catch (err) {
         console.error("Error al obtener paciente:", err);
-        res.status(500).json({ message: "Error interno del servidor" });
+        res.status(500).json({ message: "Error del servidor", error: err });
     }
 });
 
-// crear paciente
 router.post("/", async (req, res) => {
     const { usuario_id, edad, sexo, peso, estatura, diagnostico, password } = req.body;
 
@@ -389,10 +435,11 @@ router.post("/", async (req, res) => {
 
         res.status(201).json({ message: "Paciente creado", id: pacienteRef.id });
     } catch (err) {
-        console.error("Error al obtener paciente:", err);
-        res.status(500).json({ message: "Error interno del servidor" });
+        console.error("Error creando paciente:", err);
+        res.status(500).json({ message: "Error del servidor", error: err });
     }
 });
+
 
 router.put("/:usuarioId", async (req, res) => {
     const usuarioId = req.params.usuarioId;
@@ -418,7 +465,6 @@ router.put("/:usuarioId", async (req, res) => {
         }
 
         const pacienteDoc = pacienteSnapshot.docs[0];
-
         await pacienteDoc.ref.update(updateData);
 
         let nuevoPesoHistorial = null;
@@ -441,12 +487,10 @@ router.put("/:usuarioId", async (req, res) => {
             nuevoPesoHistorial
         });
     } catch (err) {
-        console.error("Error al obtener paciente:", err);
-        res.status(500).json({ message: "Error interno del servidor" });
+        console.error("Error actualizando paciente:", err);
+        res.status(500).json({ message: "Error del servidor", error: err });
     }
 });
-
-// Eliminar paciente
 router.delete("/:usuarioId", async (req, res) => {
     const usuarioId = req.params.usuarioId;
     if (!usuarioId) return res.status(400).json({ message: "ID de usuario inválido" });
